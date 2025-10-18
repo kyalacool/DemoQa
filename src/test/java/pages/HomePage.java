@@ -5,6 +5,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import pages.elements.ElementsPage;
 
 import java.util.List;
 
@@ -48,35 +49,35 @@ public class HomePage extends BasePage{
     public ElementsPage clickOnElementsMenuButton(){
         elementsMenuButton.click();
         ElementsPage elementsPage = new ElementsPage(driver);
-        waitForElementVisibility(driver,elementsPage.getWebTablesMenuButton());
+        waitForElementVisibility(elementsPage.getWebTablesMenuButton());
         return elementsPage;
     }
 
     public FormsPage clickOnFormsMenuButton(){
         formsMenuButton.click();
         FormsPage formsPage = new FormsPage(driver);
-        waitForElementVisibility(driver,formsPage.getPracticeFormMenuButton());
+        waitForElementVisibility(formsPage.getPracticeFormMenuButton());
         return formsPage;
     }
 
     public AlertsPage clickOnAlertsMenuButton(){
         alertsFrameWindowsMenuButton.click();
         AlertsPage alertsPage = new AlertsPage(driver);
-        waitForElementVisibility(driver,alertsPage.getAlertsMenuButton());
+        waitForElementVisibility(alertsPage.getAlertsMenuButton());
         return alertsPage;
     }
 
     public WidgetsPage clickOnWidgetsMenuButton(){
         widgetsMenuButton.click();
         WidgetsPage widgetsPage = new WidgetsPage(driver);
-        waitForElementVisibility(driver,widgetsPage.getAccordianMenuButton());
+        waitForElementVisibility(widgetsPage.getAccordianMenuButton());
         return widgetsPage;
     }
 
     public InteractionPage clickOnInteractionMenuButton(){
         interactionsMenuButton.click();
         InteractionPage interactionPage = new InteractionPage(driver);
-        waitForElementVisibility(driver,interactionPage.getSortableMenuButton());
+        waitForElementVisibility(interactionPage.getSortableMenuButton());
         return interactionPage;
     }
 
@@ -86,7 +87,7 @@ public class HomePage extends BasePage{
         bookStoreApplicationMenuButton.click();
         BookStoreApplicationPage bookStoreApplicationPage = new BookStoreApplicationPage(driver);
         js.executeScript("arguments[0].scrollIntoView();", bookStoreApplicationPage.getBookStoreMenuButton());
-        waitForElementVisibility(driver,bookStoreApplicationPage.getBookStoreMenuButton());
+        waitForElementVisibility(bookStoreApplicationPage.getBookStoreMenuButton());
         return bookStoreApplicationPage;
     }
 

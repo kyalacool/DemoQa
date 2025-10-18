@@ -53,4 +53,6 @@ public class HomePageTest extends BaseTest{
                 .clickOnBookStoreApplicationMenuButton();
         Assert.assertEquals(driver.getCurrentUrl(), "https://demoqa.com/books");
     }
+
+
 }

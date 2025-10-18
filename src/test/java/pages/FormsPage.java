@@ -9,7 +9,7 @@ public class FormsPage extends BasePage{
 
     @Getter
     @FindBy(xpath = "//span[@class='text'][contains(text(), 'Practice Form')]")
-    WebElement practiceFormMenuButton;
+    private WebElement practiceFormMenuButton;
 
     public FormsPage(WebDriver driver) {
         super(driver);

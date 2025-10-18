@@ -9,7 +9,7 @@ public class AlertsPage extends BasePage{
 
     @Getter
     @FindBy(xpath = "//span[@class='text'][contains(text(), 'Alerts')]")
-    WebElement alertsMenuButton;
+    private WebElement alertsMenuButton;
 
     public AlertsPage(WebDriver driver) {
         super(driver);

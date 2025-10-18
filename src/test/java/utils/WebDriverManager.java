@@ -14,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Objects;
 
+import static tests.BaseTest.getCurrentDriver;
+
 @Slf4j
 public class WebDriverManager {
     private static String waitingTime;
@@ -78,13 +80,13 @@ public class WebDriverManager {
         }
     }
 
-    public static void waitForElementVisibility(WebDriver driver, WebElement element){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Long.parseLong(waitingTime)));
+    public static void waitForElementVisibility(WebElement element){
+        WebDriverWait wait = new WebDriverWait(getCurrentDriver(), Duration.ofSeconds(Long.parseLong(waitingTime)));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public static void waitForElementPresence(WebDriver driver, By route){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Long.parseLong(waitingTime)));
+    public static void waitForElementPresence(By route){
+        WebDriverWait wait = new WebDriverWait(getCurrentDriver(), Duration.ofSeconds(Long.parseLong(waitingTime)));
         wait.until(ExpectedConditions.presenceOfElementLocated(route));
     }
 }

@@ -9,7 +9,7 @@ public class InteractionPage extends BasePage{
 
     @Getter
     @FindBy(xpath = "//span[@class='text'][contains(text(), 'Sortable')]")
-    WebElement sortableMenuButton;
+    private WebElement sortableMenuButton;
 
     public InteractionPage(WebDriver driver) {
         super(driver);

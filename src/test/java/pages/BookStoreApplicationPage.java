@@ -9,7 +9,7 @@ public class BookStoreApplicationPage extends BasePage{
 
     @Getter
     @FindBy(xpath = "//span[@class='text'][contains(text(), 'Book Store')]")
-    WebElement bookStoreMenuButton;
+    private WebElement bookStoreMenuButton;
 
     public BookStoreApplicationPage(WebDriver driver) {
         super(driver);

@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 public class WidgetsPage extends BasePage{
     @Getter
     @FindBy(xpath = "//span[@class='text'][contains(text(), 'Accordian')]")
-    WebElement accordianMenuButton;
+    private WebElement accordianMenuButton;
 
     public WidgetsPage(WebDriver driver) {
         super(driver);
