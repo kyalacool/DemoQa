@@ -3,7 +3,7 @@
     <listeners>
         <listener class-name="utils.RetryListener"/>
     </listeners>
-    <test name="Tests">
+    <test name="DemoQA tests">
         <packages>
             <package name="tests"></package>
         </packages>
