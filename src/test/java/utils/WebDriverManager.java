@@ -2,6 +2,7 @@ package utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,18 +27,18 @@ public class WebDriverManager {
         String browser = PropertyReader.getProperty("browser");
         String headless = PropertyReader.getProperty("headless");
         String env = PropertyReader.getProperty("env");
-        waitingTime =  PropertyReader.getProperty("waitingtimeinsec");
+        waitingTime = PropertyReader.getProperty("waitingtimeinsec");
 
         switch (browser) {
             case "chrome" -> {
                 ChromeOptions options = new ChromeOptions();
-                if (Objects.equals(headless, "true")){
+                if (Objects.equals(headless, "true")) {
                     options.addArguments("--headless");
                 }
                 options.addArguments("--window-size=1920,1080");
-                driver= new ChromeDriver(options);
+                driver = new ChromeDriver(options);
                 driver.get(getUrl());
-                log.info("Return {} driver.", browser);
+                log.info("Setup {} driver.", browser);
                 return driver;
             }
             case "edge" -> {
@@ -50,17 +51,18 @@ public class WebDriverManager {
                 options.addArguments("--window-size=1920,1080");
                 driver = new EdgeDriver(options);
                 driver.get(getUrl());
-                log.info("Return {} driver.", browser);
+                log.info("Setup {} driver.", browser);
                 return driver;
             }
             default -> {
                 log.warn("Browser ({}) is null", browser);
-                return null;}
+                return null;
+            }
         }
     }
 
-    public static String getUrl(){
-        switch (PropertyReader.getProperty("env")){
+    public static String getUrl() {
+        switch (PropertyReader.getProperty("env")) {
             case "local" -> {
                 return urls.LOCAL.url;
             }
@@ -70,23 +72,39 @@ public class WebDriverManager {
             }
         }
     }
-    
-    private enum urls{
+
+    private enum urls {
         LOCAL("https://demoqa.com");
 
         final String url;
+
         urls(String url) {
             this.url = url;
         }
     }
 
-    public static void waitForElementVisibility(WebElement element){
+    public static void waitForElementVisibility(WebElement element) {
         WebDriverWait wait = new WebDriverWait(getCurrentDriver(), Duration.ofSeconds(Long.parseLong(waitingTime)));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public static void waitForElementPresence(By route){
+    public static void waitForElementPresence(By route) {
         WebDriverWait wait = new WebDriverWait(getCurrentDriver(), Duration.ofSeconds(Long.parseLong(waitingTime)));
         wait.until(ExpectedConditions.presenceOfElementLocated(route));
+    }
+
+    public static void waitForElementClickable(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(getCurrentDriver(), Duration.ofSeconds(Long.parseLong(waitingTime)));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    public static void scrollTo(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) getCurrentDriver();
+        js.executeScript("arguments[0].scrollIntoView(true)", element);
+    }
+
+    public static void waitUntilTextToBePresent(By route, String text) {
+        WebDriverWait wait = new WebDriverWait(getCurrentDriver(), Duration.ofSeconds(Long.parseLong(waitingTime)));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(route, text));
     }
 }

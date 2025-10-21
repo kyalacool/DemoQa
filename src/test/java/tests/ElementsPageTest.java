@@ -3,10 +3,10 @@ package tests;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
-public class ElementsPageTest extends BaseTest{
+public class ElementsPageTest extends BaseTest {
 
     @Test
-    void verifyTextBoxWithValidData(){
+    void verifyTextBoxWithValidData() {
         HomePage homePage = new HomePage(driver);
         homePage
                 .clickOnElementsMenuButton()
@@ -15,7 +15,7 @@ public class ElementsPageTest extends BaseTest{
     }
 
     @Test
-    void verifyTextBoxWithInvalidEmail(){
+    void verifyTextBoxWithInvalidEmail() {
         HomePage homePage = new HomePage(driver);
         homePage
                 .clickOnElementsMenuButton()
@@ -24,7 +24,7 @@ public class ElementsPageTest extends BaseTest{
     }
 
     @Test
-    void verifyCheckBoxFunctionality(){
+    void verifyCheckBoxFunctionality() {
         HomePage homePage = new HomePage(driver);
         homePage
                 .clickOnElementsMenuButton()
@@ -33,7 +33,7 @@ public class ElementsPageTest extends BaseTest{
     }
 
     @Test
-    void verifyRadioButtonFunctionality(){
+    void verifyRadioButtonFunctionality() {
         HomePage homePage = new HomePage(driver);
         homePage
                 .clickOnElementsMenuButton()
@@ -42,14 +42,65 @@ public class ElementsPageTest extends BaseTest{
     }
 
     @Test
-    void verifyWebTablesFunctionality(){
+    void verifyWebTablesFunctionality() {
         HomePage homePage = new HomePage(driver);
         homePage
                 .clickOnElementsMenuButton()
                 .clickOnWebTablesMenuButton()
+                .verifyAddFunctionalityWithInvalidData()
                 .verifyAddFunctionalityWithValidData()
                 .verifyEditFunctionality()
                 .verifySearchFunctionality()
                 .verifyDeleteFuncionality();
+    }
+
+    @Test
+    public void verifyButtonsFunctionality() {
+        HomePage homePage = new HomePage(driver);
+        homePage
+                .clickOnElementsMenuButton()
+                .clickOnButtonsMenuButton()
+                .clickOnDoubleClickButton()
+                .clickOnRightClickButton()
+                .clickOnClickMeButton();
+    }
+
+    @Test
+    public void verifyLinksFunctionality() {
+        HomePage homePage = new HomePage(driver);
+        homePage
+                .clickOnElementsMenuButton()
+                .clickOnLinksMenuButton()
+                .clickOnHomeLink()
+                .clickOnDynamicHomeLink()
+                .verifyApiCallLinks();
+    }
+
+    @Test
+    public void verifyBrokenLinksImagesPage() {
+        HomePage homePage = new HomePage(driver);
+        homePage
+                .clickOnElementsMenuButton()
+                .clickOnBrokenLinksImagesMenuButton()
+                .verifyImages()
+                .verifyLinks();
+    }
+
+    @Test
+    public void verifyDownloadUploadPageFunctionality() {
+        HomePage homePage = new HomePage(driver);
+        homePage
+                .clickOnElementsMenuButton()
+                .clickOnUploadDownloadMenuButton()
+                .verifyDownloadFunctionality();
+    }
+
+    @Test
+    public void verifyDynamicPropertiesPageFunctionality() {
+        HomePage homePage = new HomePage(driver);
+        homePage
+                .clickOnElementsMenuButton()
+                .clickOnDynamicPropertiesMenuButton()
+                .verifyDynamicPropertiesFunctionality();
     }
 }

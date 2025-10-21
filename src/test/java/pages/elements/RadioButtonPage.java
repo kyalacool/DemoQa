@@ -1,6 +1,7 @@
 package pages.elements;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.testng.asserts.SoftAssert;
 import pages.BasePage;
 
+@Slf4j
 public class RadioButtonPage extends BasePage {
 
     @Getter
@@ -30,15 +32,16 @@ public class RadioButtonPage extends BasePage {
         super(driver);
     }
 
-    private boolean isResultIsNull(){
+    private boolean isResultIsNull() {
         return driver.findElements(By.xpath("//p[@class='mt-3']")).isEmpty();
     }
 
-    private boolean isChoosen(String expectedResult){
+    private boolean isChoosen(String expectedResult) {
         return choosedResult.getText().equals(expectedResult);
     }
 
-    public void verifyRadioButtonsFunctionality(){
+    public void verifyRadioButtonsFunctionality() {
+        log.info("Checking the radio buttons functionality.");
         SoftAssert soft = new SoftAssert();
         soft.assertTrue(isResultIsNull());
         noRadioButton.click();

@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class InteractionPage extends BasePage{
+public class InteractionPage extends BasePage {
 
     @Getter
     @FindBy(xpath = "//span[@class='text'][contains(text(), 'Sortable')]")

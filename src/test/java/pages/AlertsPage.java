@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AlertsPage extends BasePage{
+public class AlertsPage extends BasePage {
 
     @Getter
     @FindBy(xpath = "//span[@class='text'][contains(text(), 'Alerts')]")

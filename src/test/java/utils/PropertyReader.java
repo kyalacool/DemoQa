@@ -13,10 +13,11 @@ public class PropertyReader {
     private static PropertyReader instance;
     private static final Properties properties = new Properties();
 
-    public PropertyReader(){}
+    public PropertyReader() {
+    }
 
-    public synchronized static PropertyReader getInstance(){
-        if (instance == null){
+    public synchronized static PropertyReader getInstance() {
+        if (instance == null) {
             instance = new PropertyReader();
         }
         return instance;

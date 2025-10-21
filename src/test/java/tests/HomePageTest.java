@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
-public class HomePageTest extends BaseTest{
+public class HomePageTest extends BaseTest {
 
     @Test
     public void verifyElementsMenuButtonNavigateElementsPage() {
@@ -53,6 +53,4 @@ public class HomePageTest extends BaseTest{
                 .clickOnBookStoreApplicationMenuButton();
         Assert.assertEquals(driver.getCurrentUrl(), "https://demoqa.com/books");
     }
-
-
 }

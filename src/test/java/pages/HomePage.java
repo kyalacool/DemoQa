@@ -1,5 +1,6 @@
 package pages;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -12,10 +13,14 @@ import java.util.List;
 import static utils.WebDriverManager.waitForElementVisibility;
 
 @Slf4j
-public class HomePage extends BasePage{
+public class HomePage extends BasePage {
+
+    @Getter
+    @FindBy(xpath = "//div[@class='category-cards']")
+    private WebElement categoriesWebElement;
 
     @FindBy(xpath = "//div[@class='category-cards']")
-    private List<WebElement> categories;
+    private List<WebElement> categoriesWebElementList;
 
     @FindBy(xpath = "//div[@class='card-body']/h5[contains(text(),'Elements')]/../..")
     private WebElement elementsMenuButton;
@@ -39,55 +44,60 @@ public class HomePage extends BasePage{
         super(driver);
     }
 
-    public HomePage printCategories(){
-        for(WebElement i : categories){
+    public HomePage printCategories() {
+        for (WebElement i : categoriesWebElementList) {
             System.out.println(i.getText());
         }
         return this;
     }
 
-    public ElementsPage clickOnElementsMenuButton(){
+    public ElementsPage clickOnElementsMenuButton() {
         elementsMenuButton.click();
         ElementsPage elementsPage = new ElementsPage(driver);
         waitForElementVisibility(elementsPage.getWebTablesMenuButton());
         return elementsPage;
     }
 
-    public FormsPage clickOnFormsMenuButton(){
+    public FormsPage clickOnFormsMenuButton() {
         formsMenuButton.click();
         FormsPage formsPage = new FormsPage(driver);
         waitForElementVisibility(formsPage.getPracticeFormMenuButton());
+        log.info("User is on the FORMS page");
         return formsPage;
     }
 
-    public AlertsPage clickOnAlertsMenuButton(){
+    public AlertsPage clickOnAlertsMenuButton() {
         alertsFrameWindowsMenuButton.click();
         AlertsPage alertsPage = new AlertsPage(driver);
         waitForElementVisibility(alertsPage.getAlertsMenuButton());
+        log.info("User is on the ALERTS, FRAME & WINDOWS page");
         return alertsPage;
     }
 
-    public WidgetsPage clickOnWidgetsMenuButton(){
+    public WidgetsPage clickOnWidgetsMenuButton() {
         widgetsMenuButton.click();
         WidgetsPage widgetsPage = new WidgetsPage(driver);
         waitForElementVisibility(widgetsPage.getAccordianMenuButton());
+        log.info("User is on the WIDGETS page");
         return widgetsPage;
     }
 
-    public InteractionPage clickOnInteractionMenuButton(){
+    public InteractionPage clickOnInteractionMenuButton() {
         interactionsMenuButton.click();
         InteractionPage interactionPage = new InteractionPage(driver);
         waitForElementVisibility(interactionPage.getSortableMenuButton());
+        log.info("User is on the INTERACTIONS page");
         return interactionPage;
     }
 
-    public BookStoreApplicationPage clickOnBookStoreApplicationMenuButton(){
+    public BookStoreApplicationPage clickOnBookStoreApplicationMenuButton() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", bookStoreApplicationMenuButton);
         bookStoreApplicationMenuButton.click();
         BookStoreApplicationPage bookStoreApplicationPage = new BookStoreApplicationPage(driver);
         js.executeScript("arguments[0].scrollIntoView();", bookStoreApplicationPage.getBookStoreMenuButton());
         waitForElementVisibility(bookStoreApplicationPage.getBookStoreMenuButton());
+        log.info("User is on the BOOK STORE APPLICATION page");
         return bookStoreApplicationPage;
     }
 

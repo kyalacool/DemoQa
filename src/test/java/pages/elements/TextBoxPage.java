@@ -1,6 +1,7 @@
 package pages.elements;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,28 +11,29 @@ import org.testng.asserts.SoftAssert;
 import pages.BasePage;
 import utils.WebDriverManager;
 
+@Slf4j
 public class TextBoxPage extends BasePage {
 
-    private final String CORRECT_NAME ="Bence Varga";
+    private final String CORRECT_NAME = "Bence Varga";
     private final String CORRECT_EMAIL = "example@example.com";
     private final String INCORRECT_EMAIL = "incorrectemail";
     private final String CORRECT_CURRENT_ADDRESS = "Budapest Example street 36";
     private final String CORRECT_PERMANENT_ADDRESS = "Szolnok Example street 3";
 
     @Getter
-    @FindBy(xpath ="//input[@id='userName']")
+    @FindBy(xpath = "//input[@id='userName']")
     private WebElement fullNameInput;
 
-    @FindBy(xpath ="//input[@id='userEmail']")
+    @FindBy(xpath = "//input[@id='userEmail']")
     private WebElement emailInput;
 
     @FindBy(xpath = "//input[@id='userEmail' and contains(@class, 'field-error')]")
     private WebElement invalidEmailInput;
 
-    @FindBy(xpath ="//textarea[@id='currentAddress']")
+    @FindBy(xpath = "//textarea[@id='currentAddress']")
     private WebElement currentAddressInput;
 
-    @FindBy(xpath ="//textarea[@id='permanentAddress']")
+    @FindBy(xpath = "//textarea[@id='permanentAddress']")
     private WebElement permanentAddressInput;
 
     @FindBy(xpath = "//button[@id='submit']")
@@ -53,15 +55,18 @@ public class TextBoxPage extends BasePage {
         super(driver);
     }
 
-    public void verifyTextBoxWithCorrectData(){
+    public void verifyTextBoxWithCorrectData() {
         fullNameInput.sendKeys(CORRECT_NAME);
         emailInput.sendKeys(CORRECT_EMAIL);
         currentAddressInput.sendKeys(CORRECT_CURRENT_ADDRESS);
         permanentAddressInput.sendKeys(CORRECT_PERMANENT_ADDRESS);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true)", submitButton);
         submitButton.click();
+        log.info(" Textbox submitted with the following correct data : \n Full name : {}\n Email : {}\n Current address : {}\n Permanent address : {}",
+                CORRECT_NAME, CORRECT_EMAIL, CORRECT_CURRENT_ADDRESS, CORRECT_PERMANENT_ADDRESS);
         WebDriverManager.waitForElementVisibility(nameResultElement);
         SoftAssert soft = new SoftAssert();
-        JavascriptExecutor js = (JavascriptExecutor) driver;
         String nameResult = (String)
                 js.executeScript("return arguments[0].childNodes[1].textContent", nameResultElement);
         String emailResult = (String)
@@ -77,12 +82,17 @@ public class TextBoxPage extends BasePage {
         soft.assertAll();
     }
 
-    public void verifyTextBoxWithIncorrectEmail(){
+    public void verifyTextBoxWithIncorrectEmail() {
         fullNameInput.sendKeys(CORRECT_NAME);
         emailInput.sendKeys(INCORRECT_EMAIL);
         currentAddressInput.sendKeys(CORRECT_CURRENT_ADDRESS);
         permanentAddressInput.sendKeys(CORRECT_PERMANENT_ADDRESS);
+        WebDriverManager.waitForElementVisibility(submitButton);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true)", submitButton);
         submitButton.click();
+        log.info(" Textbox submitted with the following incorrect data : \n Full name : {}\n Email : {}\n Current address : {}\n Permanent address : {}",
+                CORRECT_NAME, INCORRECT_EMAIL, CORRECT_CURRENT_ADDRESS, CORRECT_PERMANENT_ADDRESS);
         Assert.assertTrue(invalidEmailInput.isDisplayed());
     }
 }
