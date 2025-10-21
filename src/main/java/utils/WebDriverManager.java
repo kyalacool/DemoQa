@@ -15,11 +15,23 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Objects;
 
-import static tests.BaseTest.getCurrentDriver;
-
 @Slf4j
 public class WebDriverManager {
     private static String waitingTime;
+    private static final ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
+
+    public static WebDriver setDriver(){
+        threadLocalDriver.set(getDriver());
+        return threadLocalDriver.get();
+    }
+
+    public static void removeThreadLocalDriver(){
+            threadLocalDriver.remove();
+        }
+
+    public static WebDriver getCurrentDriver() {
+        return threadLocalDriver.get();
+    }
 
     public static WebDriver getDriver() {
         PropertyReader.getInstance();

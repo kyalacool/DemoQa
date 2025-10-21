@@ -12,6 +12,7 @@ import java.util.List;
 
 import static utils.WebDriverManager.waitForElementVisibility;
 
+
 @Slf4j
 public class HomePage extends BasePage {
 

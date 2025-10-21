@@ -20,7 +20,7 @@ public class PropertyReader {
         if (instance == null) {
             instance = new PropertyReader();
         }
-        return instance;
+        return instance; 
     }
 
     public static String getProperty(String key) {
