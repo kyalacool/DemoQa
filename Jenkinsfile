@@ -19,7 +19,7 @@ pipeline {
 
         stage('Run Maven Tests') {
             steps {
-                sh "mvn clean test -Dremote.driver=true"
+                sh "mvn clean test -D'remote.driver'=true"
             }
         }
 
