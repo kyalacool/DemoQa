@@ -3,7 +3,7 @@
 
 # Jankins-agent :
 
-FROM maven:sapmachine
+FROM maven:3.9.11-sapmachine
 
 USER root
 RUN apt-get update && \
