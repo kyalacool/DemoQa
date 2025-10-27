@@ -34,7 +34,7 @@ pipeline {
 
         stage('Run Maven Tests') {
             steps {
-                sh "mvn clean test -D'remote.driver'=true"
+                  sh 'export PATH=/usr/share/maven/bin:/usr/local/bin:$PATH && mvn clean test -Dremote.driver=true'
             }
         }
 

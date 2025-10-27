@@ -14,9 +14,8 @@ RUN apt-get update && \
     chmod +x /usr/local/bin/docker-compose && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENV PATH="/usr/share/maven/bin:/usr/local/bin:${PATH}"
-
 USER jenkins
+ENV PATH="/usr/share/maven/bin:/usr/local/bin:${PATH}"
 
 #   Build it :
 #       docker build -t jenkins-maven-docker-agent .
