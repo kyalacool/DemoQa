@@ -11,12 +11,10 @@ pipeline {
 
         stage('Debug') {
             steps {
-                sh 'echo $PATH'
-                sh 'which mvn'
                 sh 'mvn -version'
-                sh 'which docker-compose'
+                sh 'docker --version'
                 sh 'docker compose version'
-            }
+                }
         }
 
         stage('Checkout') {
@@ -27,7 +25,7 @@ pipeline {
 
         stage('Start Selenium Grid') {
             steps {
-                sh 'docker-compose -f selenium-grid/docker-compose.yml up -d'
+                sh 'docker compose -f selenium-grid/docker-compose.yml up -d'
                 sh 'sleep 10'
             }
         }
@@ -40,7 +38,7 @@ pipeline {
 
         stage('Teardown Grid') {
             steps {
-                sh 'docker-compose -f selenium-grid/docker-compose.yml down'
+                sh 'docker compose -f selenium-grid/docker-compose.yml down'
             }
         }
     }
