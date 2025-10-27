@@ -14,7 +14,7 @@ pipeline {
             steps {
                 sh 'sh -c "sudo apt update"'
                 sh 'sh -c "sudo apt install docker-compose-plugin"'
-                sh 'docker-compose -f selenium-grid/docker-compose.yml up -d'
+                sh 'docker compose -f selenium-grid/docker-compose.yml up -d'
                 sh 'sleep 10'
             }
         }
@@ -27,7 +27,7 @@ pipeline {
 
         stage('Teardown Grid') {
             steps {
-                sh 'docker-compose -f selenium-grid/docker-compose.yml down'
+                sh 'docker compose -f selenium-grid/docker-compose.yml down'
             }
         }
     }
