@@ -9,18 +9,23 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.Objects;
+
+import static utils.PropertyReader.getProperty;
 
 @Slf4j
 public class WebDriverManager {
     private static String waitingTime;
     private static final ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
 
-    public static WebDriver setDriver(){
+    public static WebDriver setDriver() throws MalformedURLException {
         threadLocalDriver.set(getDriver());
         return threadLocalDriver.get();
     }
@@ -33,21 +38,26 @@ public class WebDriverManager {
         return threadLocalDriver.get();
     }
 
-    public static WebDriver getDriver() {
+    public static WebDriver getDriver() throws MalformedURLException {
         PropertyReader.getInstance();
         WebDriver driver;
-        String browser = PropertyReader.getProperty("browser");
-        String headless = PropertyReader.getProperty("headless");
-        String env = PropertyReader.getProperty("env");
-        waitingTime = PropertyReader.getProperty("waitingtimeinsec");
+        String browser = getProperty("browser");
+        String headless = getProperty("headless");
+        String env = getProperty("env");
+        waitingTime = getProperty("waitingtimeinsec");
 
         switch (browser) {
             case "chrome" -> {
                 ChromeOptions options = new ChromeOptions();
+                options.addArguments("--window-size=1920,1080");
                 if (Objects.equals(headless, "true")) {
                     options.addArguments("--headless");
                 }
-                options.addArguments("--window-size=1920,1080");
+                if (Objects.equals(getProperty("remote.driver"), "true")){
+                    driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),options);
+                    log.info("Setup {} driver.", browser);
+                    return driver;
+                }
                 driver = new ChromeDriver(options);
                 driver.get(getUrl());
                 log.info("Setup {} driver.", browser);
@@ -55,12 +65,16 @@ public class WebDriverManager {
             }
             case "edge" -> {
                 EdgeOptions options = new EdgeOptions();
-                System.out.println(headless);
+                options.addArguments("--window-size=1920,1080");
                 if (Objects.equals(headless, "true")) {
                     System.out.println("its true");
                     options.addArguments("headless");
                 }
-                options.addArguments("--window-size=1920,1080");
+                if (Objects.equals(getProperty("remote.driver"), "true")){
+                    driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),options);
+                    log.info("Setup {} driver.", browser);
+                    return driver;
+                }
                 driver = new EdgeDriver(options);
                 driver.get(getUrl());
                 log.info("Setup {} driver.", browser);
@@ -74,7 +88,7 @@ public class WebDriverManager {
     }
 
     public static String getUrl() {
-        switch (PropertyReader.getProperty("env")) {
+        switch (getProperty("env")) {
             case "local" -> {
                 return urls.LOCAL.url;
             }
