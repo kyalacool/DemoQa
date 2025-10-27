@@ -12,8 +12,8 @@ pipeline {
 
         stage('Start Selenium Grid') {
             steps {
-                sh 'sudo apt update'
-                sh 'sudo apt install docker-compose-plugin'
+                sh 'sh -c "sudo apt update"'
+                sh 'sh -c "sudo apt install docker-compose-plugin"'
                 sh 'docker-compose -f selenium-grid/docker-compose.yml up -d'
                 sh 'sleep 10'
             }
