@@ -15,6 +15,9 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENV PATH="/usr/share/maven/bin:/usr/local/bin:${PATH}"
+
+RUN useradd -m -s /bin/bash jenkins
+
 USER jenkins
 
 
@@ -22,4 +25,4 @@ USER jenkins
 #       docker build -t jenkins-maven-docker-agent .
 
 #     Run it ??:
-#      docker run -d -p 8181:8080 --name jenkins-master -v jenkins_home:/var/jenkins_home jenkins-maven-docker-agent
+#      docker run -d -p 8181:8080 --name jenkins-master -v /var/run/docker.sock:/var/run/docker.sock jenkins-maven-docker-agent
