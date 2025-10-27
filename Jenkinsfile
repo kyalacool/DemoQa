@@ -1,6 +1,11 @@
 pipeline {
 
-    agent any
+    agent {
+            docker {
+                image 'jenkins-maven-docker-agent'
+                args '-v /var/run/docker.sock:/var/run/docker.sock'
+            }
+    }
 
     stages {
 
@@ -12,9 +17,7 @@ pipeline {
 
         stage('Start Selenium Grid') {
             steps {
-                sh 'apt update && apt install -y sudo'
-                sh 'sudo apt install -y docker-compose-plugin'
-                sh 'docker compose -f selenium-grid/docker-compose.yml up -d'
+                sh 'docker-compose -f selenium-grid/docker-compose.yml up -d'
                 sh 'sleep 10'
             }
         }
@@ -27,7 +30,7 @@ pipeline {
 
         stage('Teardown Grid') {
             steps {
-                sh 'docker compose -f selenium-grid/docker-compose.yml down'
+                sh 'docker-compose -f selenium-grid/docker-compose.yml down'
             }
         }
     }
