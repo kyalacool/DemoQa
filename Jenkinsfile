@@ -15,6 +15,16 @@ pipeline {
             }
         }
 
+        stage('Debug') {
+            steps {
+                sh 'echo $PATH'
+                sh 'which mvn'
+                sh 'mvn -version'
+                sh 'which docker-compose'
+                sh 'docker-compose version'
+            }
+        }
+
         stage('Start Selenium Grid') {
             steps {
                 sh 'docker-compose -f selenium-grid/docker-compose.yml up -d'
