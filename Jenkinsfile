@@ -9,15 +9,15 @@ pipeline {
 
     stages {
 
-            stage('Debug') {
-                steps {
-                    sh 'echo $PATH'
-                    sh 'which mvn'
-                    sh 'mvn -version'
-                    sh 'which docker-compose'
-                    sh 'docker compose version'
-                }
+        stage('Debug') {
+            steps {
+                sh 'echo $PATH'
+                sh 'which mvn'
+                sh 'mvn -version'
+                sh 'which docker-compose'
+                sh 'docker compose version'
             }
+        }
 
         stage('Checkout') {
             steps {
