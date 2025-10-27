@@ -3,18 +3,16 @@
 
 # Jankins-agent :
 
-FROM maven:3.9.2-sapmachine
+FROM maven:3.9.4-eclipse-temurin-17
 
-USER root
+RUN apt-get update && apt-get install -y \
+    docker.io \
+    docker-compose \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends maven docker-cli curl && \
-    curl -L "https://github.com/docker/compose/releases/download/v2.28.2/docker-compose-$(uname -s)-$(uname -m)" \
-        -o /usr/local/bin/docker-compose && \
-    chmod +x /usr/local/bin/docker-compose && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
+RUN useradd -m -d /home/jenkins -u 1000 -s /bin/bash jenkins
 USER jenkins
+WORKDIR /home/jenkins
 
 
 #   Build it :
