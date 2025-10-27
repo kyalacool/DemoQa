@@ -8,15 +8,11 @@ FROM maven:3.9.2-sapmachine
 USER root
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends docker-cli curl && \
+    apt-get install -y --no-install-recommends maven docker-cli curl && \
     curl -L "https://github.com/docker/compose/releases/download/v2.28.2/docker-compose-$(uname -s)-$(uname -m)" \
         -o /usr/local/bin/docker-compose && \
     chmod +x /usr/local/bin/docker-compose && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
-
-ENV PATH="/usr/share/maven/bin:/usr/local/bin:${PATH}"
-
-RUN useradd -m -s /bin/bash jenkins
 
 USER jenkins
 
@@ -25,4 +21,5 @@ USER jenkins
 #       docker build -t jenkins-maven-docker-agent .
 
 #     Run it ??:
-#      docker run -d -p 8181:8080 --name jenkins-master -v /var/run/docker.sock:/var/run/docker.sock jenkins-maven-docker-agent
+#      docker run -d -p 8181:8080 --name jenkins- -v /var/run/docker.sock:/var/run/docker.sock jenkins-maven-docker-agent
+
