@@ -1,23 +1,12 @@
 # Jenkins agent :
 
-FROM jenkins/inbound-agent:jdk17
-USER root
+FROM docker:24-dind
 
-RUN apt-get update && apt-get install -y maven \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache git maven bash curl
 
-RUN apt-get update && \
-    apt-get install -y lsb-release && \
-    curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
-        https://download.docker.com/linux/debian/gpg && \
-    echo "deb [arch=$(dpkg --print-architecture) \
-        signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
-        https://download.docker.com/linux/debian \
-        $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list && \
-    apt-get update && \
-    apt-get install -y docker-ce-cli
-
+RUN adduser -D -u 1000 jenkins
 USER jenkins
+WORKDIR /home/jenkins
 
 
 #   Build it :

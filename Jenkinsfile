@@ -1,28 +1,32 @@
 pipeline {
-
     agent {
-            docker {
-                image 'jenkins-agent'
-                args '-v /var/run/docker.sock:/var/run/docker.sock'
-            }
+        docker {
+            image 'docker:24-dind'
+            args '--privileged -v /home/jenkins/.docker:/home/jenkins/.docker'
+        }
+    }
+
+    environment {
+        MAVEN_OPTS = "-Dmaven.repo.local=/home/jenkins/.m2/repository"
     }
 
     stages {
 
-
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/kyalacool/DemoQa.git'
+                checkout([$class: 'GitSCM',
+                          branches: [[name: '*/master']],
+                          userRemoteConfigs: [[url: 'https://github.com/kyalacool/DemoQa.git']]])
             }
         }
 
-                stage('Debug') {
-                    steps {
-                        sh 'mvn -version'
-                        sh 'docker --version'
-                        sh 'docker compose version'
-                        }
-                }
+        stage('Debug') {
+            steps {
+                sh 'git --version'
+                sh 'docker --version'
+                sh 'docker compose version || echo "v1 compose fallback"'
+            }
+        }
 
         stage('Start Selenium Grid') {
             steps {
@@ -33,7 +37,7 @@ pipeline {
 
         stage('Run Maven Tests') {
             steps {
-                  sh 'mvn clean test -Dremote.driver=true'
+                sh 'mvn clean test -Dremote.driver=true'
             }
         }
 
