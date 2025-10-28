@@ -1,20 +1,26 @@
 # Jenkins agent :
 
-FROM maven:3.9.4-eclipse-temurin-17
+FROM jenkins/inbound-agent:jdk17
+USER root
 
-RUN apt-get update && apt-get install -y docker.io curl \
+RUN apt-get update && apt-get install -y maven \
     && rm -rf /var/lib/apt/lists/*
 
-RUN DOCKER_COMPOSE_VERSION=2.23.0 && \
-    curl -SL "https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose && \
-    chmod +x /usr/local/bin/docker-compose
+RUN apt-get update && \
+    apt-get install -y lsb-release && \
+    curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+        https://download.docker.com/linux/debian/gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) \
+        signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+        https://download.docker.com/linux/debian \
+        $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list && \
+    apt-get update && \
+    apt-get install -y docker-ce-cli
 
-RUN useradd -m -d /home/jenkins -u 1000 -s /bin/bash jenkins
 USER jenkins
-WORKDIR /home/jenkins
 
 
 #   Build it :
-#       docker build -t jenkins-maven-docker-agent .
+#       docker build -t jenkins-agent:java-maven-selenium agent/
 
 

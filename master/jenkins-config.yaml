@@ -1,0 +1,22 @@
+jenkins:
+  clouds:
+    - docker:
+        containerCap: 5
+        dockerApi:
+          dockerHost:
+            uri: "unix:///var/run/docker.sock" [1]
+        name: "docker-cloud-dfd"
+        templates:
+          - connector:
+              jnlp:
+                user: "1000"
+            dockerTemplateBase:
+              image: "jenkins-agent:java-maven-selenium"
+              labelString: "java-maven-selenium"
+              name: "java-maven-selenium-agent"
+              remoteFs: "/home/jenkins/agent"
+              volumes:
+                - type: bind
+                  source: /var/run/docker.sock
+                  destination: /var/run/docker.sock
+                  mode: rw

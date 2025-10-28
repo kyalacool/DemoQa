@@ -16,6 +16,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static utils.PropertyReader.getProperty;
@@ -46,6 +48,16 @@ public class WebDriverManager {
         String env = getProperty("env");
         waitingTime = getProperty("waitingtimeinsec");
 
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", "/tmp/downloads"); // konténer belső mappa
+        prefs.put("download.prompt_for_download", false);
+        prefs.put("profile.default_content_settings.popups", 0);
+
+        Map<String, Object> edgePrefs = new HashMap<>();
+        edgePrefs.put("download.default_directory", "/tmp/downloads"); // node konténeren belüli könyvtár
+        edgePrefs.put("download.prompt_for_download", false);
+        edgePrefs.put("profile.default_content_settings.popups", 0);
+
         switch (browser) {
             case "chrome" -> {
                 ChromeOptions options = new ChromeOptions();
@@ -54,6 +66,7 @@ public class WebDriverManager {
                     options.addArguments("--headless");
                 }
                 if (Objects.equals(getProperty("remote.driver"), "true")){
+                    options.setExperimentalOption("prefs", prefs);
                     driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),options);
                     log.info("Setup {} driver.", browser);
                     return driver;
@@ -71,6 +84,7 @@ public class WebDriverManager {
                     options.addArguments("headless");
                 }
                 if (Objects.equals(getProperty("remote.driver"), "true")){
+                    options.setExperimentalOption("prefs", edgePrefs);
                     driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),options);
                     log.info("Setup {} driver.", browser);
                     return driver;
