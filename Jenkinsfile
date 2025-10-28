@@ -9,19 +9,20 @@ pipeline {
 
     stages {
 
-        stage('Debug') {
-            steps {
-                sh 'mvn -version'
-                sh 'docker --version'
-                sh 'docker compose version'
-                }
-        }
 
         stage('Checkout') {
             steps {
                 git branch: 'master', url: 'https://github.com/kyalacool/DemoQa.git'
             }
         }
+
+                stage('Debug') {
+                    steps {
+                        sh 'mvn -version'
+                        sh 'docker --version'
+                        sh 'docker compose version'
+                        }
+                }
 
         stage('Start Selenium Grid') {
             steps {

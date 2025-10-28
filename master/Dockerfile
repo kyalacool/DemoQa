@@ -18,4 +18,4 @@ USER jenkins
 #Run under WSL2 Linux
 
 # docker build -t jenkins-master-dfd master/
-# docker run -d -p 8181:8080 --name jenkins-master -v /var/run/docker.sock:/var/run/docker.sock:rw -v jenkins-data:/var/jenkins_home jenkins-master-dfd
+# docker run -d -p 8181:8080 --name jenkins-master -v /var/run/docker.sock:/var/run/docker.sock:rw -v jenkins-data:/var/jenkins_home -u root jenkins-master-dfd
