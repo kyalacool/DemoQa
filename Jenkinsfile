@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'docker:24-dind'
-            args '--privileged -v /home/jenkins/.docker:/home/jenkins/.docker'
+            args '--privileged -v /home/jenkins/.docker:/home/jenkins/.docker -v /var/jenkins_home:/var/jenkins_home'
         }
     }
 
