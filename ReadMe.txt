@@ -1,12 +1,16 @@
--- Selenium Grid --
+-- Make the Network --
 
-open :
-docker compose -f selenium-grid/docker-compose.yml up -d
-close :
-docker compose -f selenium-grid/docker-compose.yml down
+docker network create selenium_network
 
 -- Jenkins --
 
-docker run -d -p 8181:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins_server jenkins/jenkins:jdk21
+open :
+docker compose -f DemoQA-network/jenkins.yml up -d
 close :
-docker rm -f jenkins_server
+docker compose -f DemoQA-network/jenkins.yml down --rmi all
+
+-- Selenium Grid --
+
+docker compose -f DemoQA-network/selenium-grid.yml up -d
+close :
+docker compose -f DemoQA-network/selenium-grid.yml down --rmi all

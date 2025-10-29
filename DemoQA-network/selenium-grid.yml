@@ -1,4 +1,5 @@
 version: "3"
+
 services:
   selenium-event-bus:
     image: selenium/event-bus:latest
@@ -7,6 +8,8 @@ services:
       - "4442:4442"
       - "4443:4443"
       - "5557:5557"
+    networks:
+      - ci_network
 
   selenium-sessions:
     image: selenium/sessions:latest
@@ -19,12 +22,16 @@ services:
       - SE_EVENT_BUS_HOST=selenium-event-bus
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    networks:
+      - ci_network
 
   selenium-session-queue:
     image: selenium/session-queue:latest
     container_name: selenium-session-queue
     ports:
       - "5559:5559"
+    networks:
+      - ci_network
 
   selenium-distributor:
     image: selenium/distributor:latest
@@ -43,6 +50,8 @@ services:
       - SE_SESSIONS_MAP_PORT=5556
       - SE_SESSION_QUEUE_HOST=selenium-session-queue
       - SE_SESSION_QUEUE_PORT=5559
+    networks:
+      - ci_network
 
   selenium-router:
     image: selenium/router:latest
@@ -60,6 +69,8 @@ services:
       - SE_SESSIONS_MAP_PORT=5556
       - SE_SESSION_QUEUE_HOST=selenium-session-queue
       - SE_SESSION_QUEUE_PORT=5559
+    networks:
+      - ci_network
 
   chrome:
     image: selenium/node-chrome:latest
@@ -70,6 +81,8 @@ services:
       - SE_EVENT_BUS_HOST=selenium-event-bus
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    networks:
+      - ci_network
 
   edge:
     image: selenium/node-edge:latest
@@ -80,6 +93,8 @@ services:
       - SE_EVENT_BUS_HOST=selenium-event-bus
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    networks:
+      - ci_network
 
   firefox:
     image: selenium/node-firefox:latest
@@ -90,3 +105,10 @@ services:
       - SE_EVENT_BUS_HOST=selenium-event-bus
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    networks:
+      - ci_network
+
+networks:
+  ci_network:
+    external: true
+    name: selenium_network
