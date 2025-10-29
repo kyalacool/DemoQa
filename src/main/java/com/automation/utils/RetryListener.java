@@ -1,4 +1,4 @@
-package utils;
+package com.automation.utils;
 
 import org.testng.IAnnotationTransformer;
 import org.testng.annotations.ITestAnnotation;

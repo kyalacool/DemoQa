@@ -1,8 +1,8 @@
-package tests;
+package com.automation;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.HomePage;
+import com.automation.pages.HomePage;
 
 public class HomePageTest extends BaseTest {
 

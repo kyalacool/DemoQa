@@ -1,12 +1,12 @@
-package pages.elements;
+package com.automation.pages.elements;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import pages.BasePage;
-import utils.WebDriverManager;
+import com.automation.pages.BasePage;
+import com.automation.utils.WebDriverManager;
 
 @Slf4j
 public class ElementsPage extends BasePage {

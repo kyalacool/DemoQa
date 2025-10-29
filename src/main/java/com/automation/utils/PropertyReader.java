@@ -1,4 +1,4 @@
-package utils;
+package com.automation.utils;
 
 import lombok.extern.slf4j.Slf4j;
 

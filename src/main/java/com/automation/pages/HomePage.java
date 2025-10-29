@@ -1,4 +1,4 @@
-package pages;
+package com.automation.pages;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -6,11 +6,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import pages.elements.ElementsPage;
+import com.automation.pages.elements.ElementsPage;
 
 import java.util.List;
 
-import static utils.WebDriverManager.waitForElementVisibility;
+import static com.automation.utils.WebDriverManager.waitForElementVisibility;
 
 
 @Slf4j

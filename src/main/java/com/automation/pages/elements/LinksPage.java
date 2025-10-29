@@ -1,4 +1,4 @@
-package pages.elements;
+package com.automation.pages.elements;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -8,13 +8,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
-import pages.BasePage;
-import pages.HomePage;
+import com.automation.pages.BasePage;
+import com.automation.pages.HomePage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.WebDriverManager.*;
+import static com.automation.utils.WebDriverManager.*;
 
 @Slf4j
 public class LinksPage extends BasePage {

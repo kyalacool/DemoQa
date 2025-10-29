@@ -1,4 +1,4 @@
-package tests;
+package com.automation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeMethod;
 
 import java.net.MalformedURLException;
 
-import static utils.WebDriverManager.*;
+import static com.automation.utils.WebDriverManager.*;
 
 @Slf4j
 public class BaseTest {

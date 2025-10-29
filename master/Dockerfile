@@ -1,7 +1,6 @@
 # Jenkins master
 
-FROM jenkins/jenkins:lts
-FROM jenkins/jenkins:lts
+FROM jenkins/jenkins:latest-jdk21
 
 USER root
 

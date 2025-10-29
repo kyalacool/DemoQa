@@ -1,4 +1,4 @@
-package utils;
+package com.automation.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static utils.PropertyReader.getProperty;
+import static com.automation.utils.PropertyReader.getProperty;
 
 @Slf4j
 public class WebDriverManager {
@@ -49,12 +49,12 @@ public class WebDriverManager {
         waitingTime = getProperty("waitingtimeinsec");
 
         Map<String, Object> prefs = new HashMap<>();
-        prefs.put("download.default_directory", "/tmp/downloads"); // konténer belső mappa
+        prefs.put("download.default_directory", "/tmp/downloads");
         prefs.put("download.prompt_for_download", false);
         prefs.put("profile.default_content_settings.popups", 0);
 
         Map<String, Object> edgePrefs = new HashMap<>();
-        edgePrefs.put("download.default_directory", "/tmp/downloads"); // node konténeren belüli könyvtár
+        edgePrefs.put("download.default_directory", "/tmp/downloads");
         edgePrefs.put("download.prompt_for_download", false);
         edgePrefs.put("profile.default_content_settings.popups", 0);
 

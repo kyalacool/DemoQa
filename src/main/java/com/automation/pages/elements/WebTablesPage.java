@@ -1,4 +1,4 @@
-package pages.elements;
+package com.automation.pages.elements;
 
 import lombok.Getter;
 import org.openqa.selenium.By;
@@ -8,13 +8,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
-import pages.BasePage;
-import utils.WebDriverManager;
+import com.automation.pages.BasePage;
+import com.automation.utils.WebDriverManager;
 
 import java.time.Duration;
 import java.util.*;
 
-import static utils.WebDriverManager.waitForElementVisibility;
+import static com.automation.utils.WebDriverManager.waitForElementVisibility;
 
 public class WebTablesPage extends BasePage {
 
