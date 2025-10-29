@@ -1,13 +1,5 @@
 pipeline {
-    agent {
-            docker {
-                image 'maven:sapmachine'
-
-                args '-v maven_repo:/root/.m2'
-
-                network 'selenium_network'
-            }
-        }
+    agent any
     stages {
         stage('Run Maven Tests') {
             steps {
