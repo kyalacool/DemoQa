@@ -16,6 +16,3 @@ docker compose -f DemoQA-network/selenium-grid.yml up -d
 close :
 docker compose -f DemoQA-network/selenium-grid.yml down --rmi all
 
--- Maven repo --
-
-docker volume create maven_repo
