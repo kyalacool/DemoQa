@@ -56,7 +56,9 @@ public class UploadDownloadPage extends BasePage {
         waitForFileExist(nodeDownloadPath);
         Path downloadedPath = Paths.get(nodeDownloadPath);
         Assert.assertTrue(Files.exists(downloadedPath));
+        log.info("Downloaded file asserted.");
         waitForElementVisibility(chooseFileButton);
+        log.info(" chooseFileButton is visibile");
         chooseFileButton.sendKeys(nodeDownloadPath);
         log.info("Upload button clicked.");
         Assert.assertTrue(uploadedFilePath.isDisplayed());
