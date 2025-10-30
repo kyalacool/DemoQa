@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Run Maven Tests') {
             steps {
-                sh 'mvn clean test -D"remote.driver"=true -Dheadless=false -DsuiteXMLFiles="src/test/resources/single.xml"'
+                sh 'mvn clean test -D"remote.driver"=true -Dheadless=false -DsuiteXmlFile=src/test/resources/single.xml'
             }
         }
     }
