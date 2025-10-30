@@ -15,7 +15,7 @@ import java.io.File;
 public class UploadDownloadPage extends BasePage {
 
     String fileName = "sampleFile.jpeg";
-    String downloadPath = "C:\\Users\\bence.varga\\Downloads\\" + fileName;
+    String downloadPath = "C:\\Users\\bence.varga\\IdeaProjects\\demoqa\\Downloads" + fileName;
 
     @Getter
     @FindBy(xpath = "//h1[@class='text-center' and contains(text(),'Upload and Download')]")

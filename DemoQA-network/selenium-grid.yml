@@ -75,6 +75,9 @@ services:
   chrome:
     image: selenium/node-chrome:latest
     shm_size: 4gb
+    volumes:
+      - /c/Users/bence.varga/IdeaProjects/demoqa/Downloads:/home/seluser/Downloads
+      - /dev/shm:/dev/shm
     depends_on:
       - selenium-event-bus
     environment:
@@ -87,6 +90,9 @@ services:
   edge:
     image: selenium/node-edge:latest
     shm_size: 2gb
+    volumes:
+      - /c/Users/bence.varga/IdeaProjects/demoqa/Downloads:/home/seluser/Downloads
+      - /dev/shm:/dev/shm
     depends_on:
       - selenium-event-bus
     environment:
@@ -99,6 +105,9 @@ services:
   firefox:
     image: selenium/node-firefox:latest
     shm_size: 2gb
+    volumes:
+      - /c/Users/bence.varga/IdeaProjects/demoqa/Downloads:/home/seluser/Downloads
+      - /dev/shm:/dev/shm
     depends_on:
       - selenium-event-bus
     environment:
