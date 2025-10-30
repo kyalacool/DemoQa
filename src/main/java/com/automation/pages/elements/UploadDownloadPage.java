@@ -45,7 +45,7 @@ public class UploadDownloadPage extends BasePage {
     }
 
     public void verifyDownloadFunctionality() {
-//        ((RemoteWebDriver) getCurrentDriver()).setFileDetector(new LocalFileDetector());
+        ((RemoteWebDriver) getCurrentDriver()).setFileDetector(new LocalFileDetector());
         Path notDownloadedPath = Paths.get(nodeDownloadPath);
         Assert.assertFalse(Files.exists(notDownloadedPath));
         waitForElementVisibility(downloadButton);
@@ -70,6 +70,6 @@ public class UploadDownloadPage extends BasePage {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        ((RemoteWebDriver) getCurrentDriver()).setFileDetector(new UselessFileDetector());
+        ((RemoteWebDriver) getCurrentDriver()).setFileDetector(new UselessFileDetector());
     }
 }
