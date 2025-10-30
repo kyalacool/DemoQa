@@ -70,7 +70,7 @@ public class WebDriverManager {
                 }
                 if (Objects.equals(getProperty("remote.driver"), "true")){
                     options.setExperimentalOption("prefs", prefs);
-                    driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),options);
+                    driver = new RemoteWebDriver(new URL("http://selenium-router:4444/wd/hub"),options);
                     log.info("Setup {} driver.", browser);
                     return driver;
                 }
@@ -89,7 +89,7 @@ public class WebDriverManager {
                 }
                 if (Objects.equals(getProperty("remote.driver"), "true")){
                     options.setExperimentalOption("prefs", edgePrefs);
-                    driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),options);
+                    driver = new RemoteWebDriver(new URL("http://selenium-router:4444/wd/hub"),options);
                     log.info("Setup {} driver.", browser);
                     return driver;
                 }
