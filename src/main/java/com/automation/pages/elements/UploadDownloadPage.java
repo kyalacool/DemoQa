@@ -49,10 +49,9 @@ public class UploadDownloadPage extends BasePage {
         log.info("Download button clicked.");
         int round = 0;
         int waiting = 5;
-        if (waitForFileExist(nodeDownloadPath)){
-            File downloadedFile = new File(nodeDownloadPath);
-            Assert.assertTrue(downloadedFile.exists());
-        }
+        waitForFileExist(nodeDownloadPath);
+        File downloadedFile = new File(nodeDownloadPath);
+        Assert.assertTrue(downloadedFile.exists());
         waitForElementVisibility(chooseFileButton);
         chooseFileButton.sendKeys(nodeDownloadPath);
         log.info("Upload button clicked.");
