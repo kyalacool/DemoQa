@@ -45,6 +45,7 @@ public class UploadDownloadPage extends BasePage {
     }
 
     public void verifyDownloadFunctionality() {
+//        ((RemoteWebDriver) getCurrentDriver()).setFileDetector(new LocalFileDetector());
         Path notDownloadedPath = Paths.get(nodeDownloadPath);
         Assert.assertFalse(Files.exists(notDownloadedPath));
         waitForElementVisibility(downloadButton);
@@ -58,7 +59,6 @@ public class UploadDownloadPage extends BasePage {
         log.info("Downloaded file asserted.");
         waitForElementVisibility(chooseFileButton);
         log.info(" chooseFileButton is visibile");
-        ((RemoteWebDriver) getCurrentDriver()).setFileDetector(new LocalFileDetector());
         chooseFileButton.sendKeys(nodeDownloadPath);
         log.info("Upload button clicked.");
         Assert.assertTrue(uploadedFilePath.isDisplayed());
@@ -70,6 +70,6 @@ public class UploadDownloadPage extends BasePage {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ((RemoteWebDriver) getCurrentDriver()).setFileDetector(new UselessFileDetector());
+//        ((RemoteWebDriver) getCurrentDriver()).setFileDetector(new UselessFileDetector());
     }
 }
