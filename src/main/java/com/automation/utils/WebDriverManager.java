@@ -13,12 +13,14 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 import static com.automation.utils.PropertyReader.getProperty;
 
@@ -126,6 +128,22 @@ public class WebDriverManager {
     public static void waitForElementVisibility(WebElement element) {
         WebDriverWait wait = new WebDriverWait(getCurrentDriver(), Duration.ofSeconds(Long.parseLong(waitingTime)));
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public static boolean waitForFileExist(String route){
+        WebDriverWait wait = new WebDriverWait(getCurrentDriver(),Duration.ofSeconds(Long.parseLong(waitingTime)));
+        log.info("Looking for the downloaded file at path : {}", route);
+        try {
+            wait.until((Function<WebDriver, Boolean>) d -> {
+                File file = new File(route);
+                return file.exists();
+            });
+            log.info("File found successfully at path : {}", route);
+            return true;
+        } catch (org.openqa.selenium.TimeoutException e) {
+            log.warn("File was NOT found at path: {} within {} seconds.", route, waitingTime);
+            return false;
+        }
     }
 
     public static void waitForElementPresence(By route) {

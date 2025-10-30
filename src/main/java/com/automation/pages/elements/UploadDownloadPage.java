@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.UselessFileDetector;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 import com.automation.pages.BasePage;
@@ -11,11 +14,13 @@ import com.automation.utils.WebDriverManager;
 
 import java.io.File;
 
+import static com.automation.utils.WebDriverManager.*;
+
 @Slf4j
 public class UploadDownloadPage extends BasePage {
 
     String fileName = "sampleFile.jpeg";
-    String downloadPath = "C:\\Users\\bence.varga\\IdeaProjects\\demoqa\\Downloads" + fileName;
+    String downloadPath = "C:\\Users\\bence.varga\\IdeaProjects\\demoqa\\Downloads\\" + fileName;
 
     @Getter
     @FindBy(xpath = "//h1[@class='text-center' and contains(text(),'Upload and Download')]")
@@ -35,30 +40,25 @@ public class UploadDownloadPage extends BasePage {
     }
 
     public void verifyDownloadFunctionality() {
-        File downloadedFile = new File(downloadPath);
-        downloadedFile.delete();
-        Assert.assertFalse(downloadedFile.exists());
-        WebDriverManager.waitForElementVisibility(downloadButton);
+        ((RemoteWebDriver) getCurrentDriver()).setFileDetector(new LocalFileDetector());
+        File notDownloadedFile = new File(downloadPath);
+        Assert.assertFalse(notDownloadedFile.exists());
+        waitForElementVisibility(downloadButton);
         downloadButton.click();
         log.info("Download button clicked.");
         int round = 0;
         int waiting = 5;
-        while (round < waiting) {
-            if (downloadedFile.exists()) {
-                break;
-            }
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            round++;
+        if (waitForFileExist(downloadPath)){
+            File downloadedFile = new File(downloadPath);
+            Assert.assertTrue(downloadedFile.exists());
         }
-        Assert.assertTrue(downloadedFile.exists());
-        WebDriverManager.waitForElementVisibility(chooseFileButton);
+        waitForElementVisibility(chooseFileButton);
         chooseFileButton.sendKeys(downloadPath);
         log.info("Upload button clicked.");
         Assert.assertTrue(uploadedFilePath.isDisplayed());
         Assert.assertEquals(uploadedFilePath.getText(), "C:\\fakepath\\" + fileName);
+        File file = new File(downloadPath);
+        file.delete();
+        ((RemoteWebDriver) getCurrentDriver()).setFileDetector(new UselessFileDetector());
     }
 }
