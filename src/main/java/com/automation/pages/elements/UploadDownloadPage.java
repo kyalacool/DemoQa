@@ -21,6 +21,7 @@ public class UploadDownloadPage extends BasePage {
 
     String fileName = "sampleFile.jpeg";
     String downloadPath = "C:\\Users\\bence.varga\\IdeaProjects\\demoqa\\Downloads\\" + fileName;
+    String nodeDownloadPath = "/home/seluser/Downloads";
 
     @Getter
     @FindBy(xpath = "//h1[@class='text-center' and contains(text(),'Upload and Download')]")
@@ -41,23 +42,23 @@ public class UploadDownloadPage extends BasePage {
 
     public void verifyDownloadFunctionality() {
         ((RemoteWebDriver) getCurrentDriver()).setFileDetector(new LocalFileDetector());
-        File notDownloadedFile = new File(downloadPath);
+        File notDownloadedFile = new File(nodeDownloadPath);
         Assert.assertFalse(notDownloadedFile.exists());
         waitForElementVisibility(downloadButton);
         downloadButton.click();
         log.info("Download button clicked.");
         int round = 0;
         int waiting = 5;
-        if (waitForFileExist(downloadPath)){
-            File downloadedFile = new File(downloadPath);
+        if (waitForFileExist(nodeDownloadPath)){
+            File downloadedFile = new File(nodeDownloadPath);
             Assert.assertTrue(downloadedFile.exists());
         }
         waitForElementVisibility(chooseFileButton);
-        chooseFileButton.sendKeys(downloadPath);
+        chooseFileButton.sendKeys(nodeDownloadPath);
         log.info("Upload button clicked.");
         Assert.assertTrue(uploadedFilePath.isDisplayed());
         Assert.assertEquals(uploadedFilePath.getText(), "C:\\fakepath\\" + fileName);
-        File file = new File(downloadPath);
+        File file = new File(nodeDownloadPath);
         file.delete();
         ((RemoteWebDriver) getCurrentDriver()).setFileDetector(new UselessFileDetector());
     }
