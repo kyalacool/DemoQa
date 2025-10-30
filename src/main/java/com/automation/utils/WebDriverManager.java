@@ -16,6 +16,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -134,11 +137,11 @@ public class WebDriverManager {
 
     public static boolean waitForFileExist(String route){
         WebDriverWait wait = new WebDriverWait(getCurrentDriver(),Duration.ofSeconds(Long.parseLong(waitingTime)));
+        Path path = Paths.get(route);
         log.info("Looking for the downloaded file at path : {}", route);
         try {
             wait.until((Function<WebDriver, Boolean>) d -> {
-                File file = new File(route);
-                return file.exists();
+                return Files.exists(path);
             });
             log.info("File found successfully at path : {}", route);
             return true;
