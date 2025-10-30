@@ -2,7 +2,7 @@
 
 docker network create selenium_network
 
--- Jenkins --
+-- Jenkins with Dockerfile (Maven) --
 
 open :
 docker compose -f DemoQA-network/jenkins.yml up -d
