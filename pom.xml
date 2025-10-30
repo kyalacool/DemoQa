@@ -47,7 +47,7 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/parallel.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/single.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <useFile>true</useFile>
                     <reportFormat>xml</reportFormat>
