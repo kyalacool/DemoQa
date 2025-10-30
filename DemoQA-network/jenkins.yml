@@ -11,6 +11,7 @@ services:
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
+      - /c/Users/bence.varga/IdeaProjects/demoqa/Downloads:/data/downloads
     networks:
       - ci_network
 
