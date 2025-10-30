@@ -49,14 +49,14 @@ public class WebDriverManager {
         waitingTime = getProperty("waitingtimeinsec");
 
         Map<String, Object> prefs = new HashMap<>();
-        prefs.put("download.default_directory", "/tmp/downloads");
         prefs.put("download.prompt_for_download", false);
         prefs.put("profile.default_content_settings.popups", 0);
+        prefs.put("download.default_directory", "/home/seluser/Downloads");
 
         Map<String, Object> edgePrefs = new HashMap<>();
-        edgePrefs.put("download.default_directory", "/tmp/downloads");
         edgePrefs.put("download.prompt_for_download", false);
         edgePrefs.put("profile.default_content_settings.popups", 0);
+        edgePrefs.put("download.default_directory", "/home/seluser/Downloads");
 
         switch (browser) {
             case "chrome" -> {

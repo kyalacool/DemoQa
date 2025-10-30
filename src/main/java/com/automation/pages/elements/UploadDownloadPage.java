@@ -52,7 +52,7 @@ public class UploadDownloadPage extends BasePage {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            waiting++;
+            round++;
         }
         Assert.assertTrue(downloadedFile.exists());
         WebDriverManager.waitForElementVisibility(chooseFileButton);
