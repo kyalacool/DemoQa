@@ -8,6 +8,7 @@
 
     <properties>
         <allure-testng.version>2.21.0</allure-testng.version>
+        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
         <aspectj.version>1.9.24</aspectj.version>
         <hamcrest.version>3.0</hamcrest.version>
         <log4j-core.version>2.25.2</log4j-core.version>
@@ -51,9 +52,12 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-                    <systemPropertyVariables>
-                        <allure.results.directory>/data/project/target/allure-results</allure.results.directory>
-                    </systemPropertyVariables>
+                    <systemProperties>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${allure.results.directory}</value>
+                        </property>
+                    </systemProperties>
                 </configuration>
                 <dependencies>
                     <dependency>
