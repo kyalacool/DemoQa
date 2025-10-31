@@ -12,6 +12,7 @@ services:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /c/Users/bence.varga/IdeaProjects/demoqa/Downloads:/data/downloads
+      - /c/Users/bence.varga/IdeaProjects/demoqa:/data/project
     networks:
       - ci_network
 
@@ -22,8 +23,8 @@ services:
     ports:
       - "5050:5050"
     volumes:
-      - allure-results:/app/allure-results
-      - allure-report:/app/allure-report
+      - /c/Users/bence.varga/IdeaProjects/demoqa/target/allure-results:/app/allure-results
+      - /c/Users/bence.varga/IdeaProjects/demoqa/target/allure-report:/app/allure-report
     command: serve /app/allure-results --host 0.0.0.0 --port 5050
     networks:
       - ci_network
