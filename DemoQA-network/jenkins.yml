@@ -15,11 +15,28 @@ services:
     networks:
       - ci_network
 
+  allure:
+    image: frankescobar/allure-docker-service
+    container_name: allure
+    restart: unless-stopped
+    ports:
+      - "5050:5050"
+    volumes:
+      - allure-results:/app/allure-results
+      - allure-report:/app/allure-report
+    command: serve /app/allure-results --host 0.0.0.0 --port 5050
+    networks:
+      - ci_network
+
 volumes:
   jenkins_home:
     name: jenkins_data
   maven_cache:
     name: maven_repo
+  allure-results:
+    name: allure_results
+  allure-report:
+    name: allure_report
 
 networks:
   ci_network:
