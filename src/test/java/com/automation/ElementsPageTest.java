@@ -86,7 +86,7 @@ public class ElementsPageTest extends BaseTest {
                 .verifyLinks();
     }
 
-    @Test
+    @Test(groups = "download")
     public void verifyDownloadUploadPageFunctionality() {
         HomePage homePage = new HomePage(driver);
         homePage

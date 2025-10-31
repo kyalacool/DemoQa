@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="DemoQA.com single tests without Download and upload method" >
+    <groups>
+        <run>
+            <exclude name="download"/> </run>
+    </groups>
+    <listeners>
+        <listener class-name="com.automation.utils.RetryListener"/>
+    </listeners>
+    <test name="Tests without download tag">
+        <packages>
+            <package name="com.automation"></package>
+        </packages>
+    </test>
+</suite>
