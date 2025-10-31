@@ -8,9 +8,19 @@ services:
     ports:
       - "8181:8080"
       - "50000:50000"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 4096M
+
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
+      - maven_cache:/home/jenkins/.m2
+
+    user: "1000:1000"
+
     networks:
       - ci_network
 
@@ -19,10 +29,6 @@ volumes:
     name: jenkins_data
   maven_cache:
     name: maven_repo
-  allure-results:
-    name: allure_results
-  allure-report:
-    name: allure_report
 
 networks:
   ci_network:
