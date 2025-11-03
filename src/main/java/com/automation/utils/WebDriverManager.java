@@ -31,7 +31,8 @@ public class WebDriverManager {
     private static String waitingTime;
 
     public static WebDriver setDriver() throws MalformedURLException {
-        threadLocalDriver.set(getDriver());
+        WebDriver driver = createDriver();
+        threadLocalDriver.set(driver);
         return threadLocalDriver.get();
     }
 
@@ -43,9 +44,9 @@ public class WebDriverManager {
         return threadLocalDriver.get();
     }
 
-    public static WebDriver getDriver() throws MalformedURLException {
+    public static WebDriver createDriver() throws MalformedURLException {
         PropertyReader.getInstance();
-        WebDriver driver = null;
+        WebDriver driver;
         waitingTime = getProperty("waitingtimeinsec");
         String env = getProperty("env");
         String browser = getProperty("browser");
@@ -92,7 +93,6 @@ public class WebDriverManager {
 
         if (Objects.equals(env, "ci")) {
             driver = new RemoteWebDriver(new URL(remote_url), capabilities);
-            driver.get(page_url);
         }
         else if (Objects.equals(env, "local")) {
             driver = switch (browser.toLowerCase()) {
@@ -101,7 +101,6 @@ public class WebDriverManager {
                 case "edge" -> new EdgeDriver((EdgeOptions) capabilities);
                 default -> throw new IllegalStateException("Unknown browser: " + browser);
             };
-            driver.get(page_url);
         }
         else {
             log.error("Unknown or missing environment property: {}", env);

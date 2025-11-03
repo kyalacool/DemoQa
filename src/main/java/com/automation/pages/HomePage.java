@@ -23,6 +23,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[@class='category-cards']")
     private List<WebElement> categoriesWebElementList;
 
+    @Getter
     @FindBy(xpath = "//div[@class='card-body']/h5[contains(text(),'Elements')]/../..")
     private WebElement elementsMenuButton;
 
@@ -101,6 +102,4 @@ public class HomePage extends BasePage {
         log.info("User is on the BOOK STORE APPLICATION page");
         return bookStoreApplicationPage;
     }
-
-
 }

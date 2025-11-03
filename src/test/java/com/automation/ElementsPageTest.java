@@ -8,7 +8,7 @@ public class ElementsPageTest extends BaseTest {
 
     @Test
     void verifyTextBoxWithValidData() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnElementsMenuButton()
                 .clickOnTextBoxMenuButton()
@@ -17,7 +17,7 @@ public class ElementsPageTest extends BaseTest {
 
     @Test
     void verifyTextBoxWithInvalidEmail() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnElementsMenuButton()
                 .clickOnTextBoxMenuButton()
@@ -26,7 +26,7 @@ public class ElementsPageTest extends BaseTest {
 
     @Test
     void verifyCheckBoxFunctionality() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnElementsMenuButton()
                 .clickOnCheckBoxMenuButton()
@@ -35,7 +35,7 @@ public class ElementsPageTest extends BaseTest {
 
     @Test
     void verifyRadioButtonFunctionality() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnElementsMenuButton()
                 .clickOnRadioButtonMenuButton()
@@ -44,7 +44,7 @@ public class ElementsPageTest extends BaseTest {
 
     @Test
     void verifyWebTablesFunctionality() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnElementsMenuButton()
                 .clickOnWebTablesMenuButton()
@@ -57,7 +57,7 @@ public class ElementsPageTest extends BaseTest {
 
     @Test
     public void verifyButtonsFunctionality() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnElementsMenuButton()
                 .clickOnButtonsMenuButton()
@@ -68,7 +68,7 @@ public class ElementsPageTest extends BaseTest {
 
     @Test
     public void verifyLinksFunctionality() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnElementsMenuButton()
                 .clickOnLinksMenuButton()
@@ -79,7 +79,7 @@ public class ElementsPageTest extends BaseTest {
 
     @Test
     public void verifyBrokenLinksImagesPage() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnElementsMenuButton()
                 .clickOnBrokenLinksImagesMenuButton()
@@ -89,7 +89,7 @@ public class ElementsPageTest extends BaseTest {
 
     @Test(groups = "download")
     public void verifyDownloadUploadPageFunctionality() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnElementsMenuButton()
                 .clickOnUploadDownloadMenuButton()
@@ -98,7 +98,7 @@ public class ElementsPageTest extends BaseTest {
 
     @Test
     public void verifyDynamicPropertiesPageFunctionality() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnElementsMenuButton()
                 .clickOnDynamicPropertiesMenuButton()

@@ -1,56 +1,56 @@
 package com.automation;
 
+import com.automation.pages.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import com.automation.pages.HomePage;
 
 public class HomePageTest extends BaseTest {
 
     @Test
     public void verifyElementsMenuButtonNavigateElementsPage() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnElementsMenuButton();
-        Assert.assertEquals(driver.getCurrentUrl(), "https://demoqa.com/elements");
+        Assert.assertEquals(getDriver().getCurrentUrl(), "https://demoqa.com/elements");
     }
 
     @Test
     public void verifyFormsMenuButtonNavigateFormsPage() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnFormsMenuButton();
-        Assert.assertEquals(driver.getCurrentUrl(), "https://demoqa.com/forms");
+        Assert.assertEquals(getDriver().getCurrentUrl(), "https://demoqa.com/forms");
     }
 
     @Test
     public void verifyAlertsMenuButtonNavigateAlertsPage() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnAlertsMenuButton();
-        Assert.assertEquals(driver.getCurrentUrl(), "https://demoqa.com/alertsWindows");
+        Assert.assertEquals(getDriver().getCurrentUrl(), "https://demoqa.com/alertsWindows");
     }
 
     @Test
     public void verifyWidgetsMenuButtonNavigateWidgetsPage() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnWidgetsMenuButton();
-        Assert.assertEquals(driver.getCurrentUrl(), "https://demoqa.com/widgets");
+        Assert.assertEquals(getDriver().getCurrentUrl(), "https://demoqa.com/widgets");
     }
 
     @Test
     public void verifyInteractionMenuButtonNavigateInteractionPage() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnInteractionMenuButton();
-        Assert.assertEquals(driver.getCurrentUrl(), "https://demoqa.com/interaction");
+        Assert.assertEquals(getDriver().getCurrentUrl(), "https://demoqa.com/interaction");
     }
 
     @Test
     public void verifyBookStoreApplicationMenuButtonNavigateBookStoreApplicationPage() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage
                 .clickOnBookStoreApplicationMenuButton();
-        Assert.assertEquals(driver.getCurrentUrl(), "https://demoqa.com/books");
+        Assert.assertEquals(getDriver().getCurrentUrl(), "https://demoqa.com/books");
     }
 }

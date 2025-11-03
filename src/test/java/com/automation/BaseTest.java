@@ -1,10 +1,8 @@
 package com.automation;
 
-import com.automation.utils.WebDriverManager;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
@@ -14,17 +12,26 @@ import static com.automation.utils.WebDriverManager.*;
 
 @Slf4j
 public class BaseTest {
-    public WebDriver driver;
 
-    @BeforeMethod
+    protected WebDriver getDriver(){
+        return getCurrentDriver();
+    }
+
+    @BeforeClass
     void setup() throws MalformedURLException {
-        driver = setDriver();
+        WebDriver driver = setDriver();
         driver.get(page_url);
     }
 
-    @AfterMethod
+    @BeforeMethod
+    void reloadHomePage() {
+        WebDriver driver = getCurrentDriver();
+        driver.get(page_url);
+    }
+
+    @AfterClass
     void tearDown() {
-        driver.quit();
+        getCurrentDriver().quit();
         removeThreadLocalDriver();
     }
 }
