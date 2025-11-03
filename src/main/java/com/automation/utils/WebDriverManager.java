@@ -1,10 +1,7 @@
 package com.automation.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -28,11 +25,10 @@ import static com.automation.utils.PropertyReader.getProperty;
 
 @Slf4j
 public class WebDriverManager {
-    private static String waitingTime;
-    private static String env;
     private static final ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
     public final static String page_url = "https://demoqa.com";
     private final static String remote_url = "http://selenium-router:4444/wd/hub";
+    private static String waitingTime;
 
     public static WebDriver setDriver() throws MalformedURLException {
         threadLocalDriver.set(getDriver());
@@ -40,7 +36,7 @@ public class WebDriverManager {
     }
 
     public static void removeThreadLocalDriver(){
-            threadLocalDriver.remove();
+        threadLocalDriver.remove();
         }
 
     public static WebDriver getCurrentDriver() {
@@ -49,30 +45,24 @@ public class WebDriverManager {
 
     public static WebDriver getDriver() throws MalformedURLException {
         PropertyReader.getInstance();
-        WebDriver driver;
+        WebDriver driver = null;
         waitingTime = getProperty("waitingtimeinsec");
-        env = getProperty("env");
+        String env = getProperty("env");
         String browser = getProperty("browser");
         String headless = getProperty("headless");
+        Capabilities capabilities;
 
-        switch (browser) {
+        switch (browser.toLowerCase()) {
             case "chrome" -> {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--window-size=1920,1080");
                 if (Objects.equals(headless, "true")) {
                     options.addArguments("--headless");
                 }
-                if (Objects.equals(env, "ci")){
+                if (Objects.equals(env, "ci")) {
                     options.addArguments("--no-sandbox");
-                    driver = new RemoteWebDriver(new URL(remote_url),options);
-                    driver.get(page_url);
-                    log.info("Setup {} driver, in {} environment.", browser, env);
-                    return driver;
                 }
-                driver = new ChromeDriver(options);
-                driver.get(page_url);
-                log.info("Setup {} driver, in {} environment.", browser, env);
-                return driver;
+                capabilities = options;
             }
             case "edge" -> {
                 EdgeOptions options = new EdgeOptions();
@@ -80,17 +70,10 @@ public class WebDriverManager {
                 if (Objects.equals(headless, "true")) {
                     options.addArguments("headless");
                 }
-                if (Objects.equals(env, "ci")){
+                if (Objects.equals(env, "ci")) {
                     options.addArguments("--no-sandbox");
-                    driver = new RemoteWebDriver(new URL(remote_url),options);
-                    driver.get(page_url);
-                    log.info("Setup {} driver, in {} environment.", browser, env);
-                    return driver;
                 }
-                driver = new EdgeDriver(options);
-                driver.get(page_url);
-                log.info("Setup {} driver, in {} environment.", browser, env);
-                return driver;
+                capabilities = options;
             }
             case "firefox" -> {
                 FirefoxOptions options = new FirefoxOptions();
@@ -99,23 +82,33 @@ public class WebDriverManager {
                 if (Objects.equals(headless, "true")) {
                     options.addArguments("-headless");
                 }
-                if (Objects.equals(env, "ci")){
+                if (Objects.equals(env, "ci")) {
                     options.addArguments("--no-sandbox");
-                    driver = new RemoteWebDriver(new URL(remote_url),options);
-                    driver.get(page_url);
-                    log.info("Setup {} driver, in {} environment.", browser, env);
-                    return driver;
                 }
-                driver = new FirefoxDriver(options);
-                driver.get(page_url);
-                log.info("Setup {} driver, in {} environment.", browser, env);
-                return driver;
+                capabilities = options;
             }
-            default -> {
-                log.warn("Browser ({}) or environment({}) is null", browser, env);
-                return null;
-            }
+            default -> throw new IllegalArgumentException("Unknown browser: " + browser);
         }
+
+        if (Objects.equals(env, "ci")) {
+            driver = new RemoteWebDriver(new URL(remote_url), capabilities);
+            driver.get(page_url);
+        }
+        else if (Objects.equals(env, "local")) {
+            driver = switch (browser.toLowerCase()) {
+                case "chrome" -> new ChromeDriver((ChromeOptions) capabilities);
+                case "firefox" -> new FirefoxDriver((FirefoxOptions) capabilities);
+                case "edge" -> new EdgeDriver((EdgeOptions) capabilities);
+                default -> throw new IllegalStateException("Unknown browser: " + browser);
+            };
+            driver.get(page_url);
+        }
+        else {
+            log.error("Unknown or missing environment property: {}", env);
+            throw new IllegalArgumentException("Unknown or missing environment property: " + env);
+        }
+        log.info("Setup {} driver, in {} environment.", browser, env);
+        return driver;
     }
 
 //    --- WEBDRIVER WAIT METHODS ---
@@ -135,7 +128,7 @@ public class WebDriverManager {
             });
             log.info("File found successfully at path : {}", route);
             return true;
-        } catch (org.openqa.selenium.TimeoutException e) {
+        } catch (TimeoutException e) {
             log.warn("File was NOT found at path: {} within {} seconds.", route, waitingTime);
             return false;
         }

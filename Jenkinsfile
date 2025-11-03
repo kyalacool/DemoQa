@@ -9,12 +9,14 @@ pipeline {
         }
         stage('Run HomePage Tests') {
             steps {
-               sh "mvn clean test -Dremote.driver=true -Dtest='HomePageTest'"
+                echo "Test start with ${Browser} browser"
+                sh "mvn clean test -Denv=ci -Dtest='HomePageTest' -Dbrowser=${Browser}"
             }
         }
         stage('Run ElementsPage Tests without download') {
             steps {
-               sh "mvn test -Dremote.driver=true -Dtest='ElementsPageTest' -Dgroups='!download'"
+                echo "Test start with ${Browser} browser"
+                sh "mvn test -Denv=ci -Dtest='ElementsPageTest' -Dgroups='!download' -Dbrowser=${Browser}"
             }
         }
     }
