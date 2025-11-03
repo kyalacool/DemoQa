@@ -1,13 +1,11 @@
 package com.automation;
 
-import io.qameta.allure.Step;
-import org.testng.annotations.Test;
 import com.automation.pages.HomePage;
+import org.testng.annotations.Test;
 
 
 public class ElementsPageTest extends BaseTest {
 
-    @Step("Test case step")
     @Test
     void verifyTextBoxWithValidData() {
         HomePage homePage = new HomePage(driver);

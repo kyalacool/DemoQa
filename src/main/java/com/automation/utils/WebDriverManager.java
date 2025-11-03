@@ -9,19 +9,18 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -30,6 +29,7 @@ import static com.automation.utils.PropertyReader.getProperty;
 @Slf4j
 public class WebDriverManager {
     private static String waitingTime;
+    private static String env;
     private static final ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
 
     public static WebDriver setDriver() throws MalformedURLException {
@@ -48,70 +48,77 @@ public class WebDriverManager {
     public static WebDriver getDriver() throws MalformedURLException {
         PropertyReader.getInstance();
         WebDriver driver;
+        waitingTime = getProperty("waitingtimeinsec");
+        env = getProperty("env");
         String browser = getProperty("browser");
         String headless = getProperty("headless");
-        String env = getProperty("env");
-        waitingTime = getProperty("waitingtimeinsec");
-
-        Map<String, Object> prefs = new HashMap<>();
-        prefs.put("download.prompt_for_download", false);
-        prefs.put("profile.default_content_settings.popups", 0);
-        prefs.put("download.default_directory", "/home/seluser/Downloads");
-
-        Map<String, Object> edgePrefs = new HashMap<>();
-        edgePrefs.put("download.prompt_for_download", false);
-        edgePrefs.put("profile.default_content_settings.popups", 0);
-        edgePrefs.put("download.default_directory", "/home/seluser/Downloads");
 
         switch (browser) {
             case "chrome" -> {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--window-size=1920,1080");
-                options.addArguments("--no-sandbox");
                 if (Objects.equals(headless, "true")) {
                     options.addArguments("--headless");
                 }
-                if (Objects.equals(getProperty("remote.driver"), "true")){
-                    options.setExperimentalOption("prefs", prefs);
-                    driver = new RemoteWebDriver(new URL("http://selenium-router:4444/wd/hub"),options);
-                    log.info("Setup {} driver.", browser);
+                if (Objects.equals(env, "ci")){
+                    options.addArguments("--no-sandbox");
+                    driver = new RemoteWebDriver(new URL(getUrl()),options);
+                    log.info("Setup {} driver, in {} environment.", browser, env);
                     return driver;
                 }
                 driver = new ChromeDriver(options);
                 driver.get(getUrl());
-                log.info("Setup {} driver.", browser);
+                log.info("Setup {} driver, in {} environment.", browser, env);
                 return driver;
             }
             case "edge" -> {
                 EdgeOptions options = new EdgeOptions();
                 options.addArguments("--window-size=1920,1080");
-                options.addArguments("--no-sandbox");
                 if (Objects.equals(headless, "true")) {
-                    System.out.println("its true");
                     options.addArguments("headless");
                 }
-                if (Objects.equals(getProperty("remote.driver"), "true")){
-                    options.setExperimentalOption("prefs", edgePrefs);
-                    driver = new RemoteWebDriver(new URL("http://selenium-router:4444/wd/hub"),options);
-                    log.info("Setup {} driver.", browser);
+                if (Objects.equals(env, "ci")){
+                    options.addArguments("--no-sandbox");
+                    driver = new RemoteWebDriver(new URL(getUrl()),options);
+                    log.info("Setup {} driver, in {} environment.", browser, env);
                     return driver;
                 }
                 driver = new EdgeDriver(options);
                 driver.get(getUrl());
-                log.info("Setup {} driver.", browser);
+                log.info("Setup {} driver, in {} environment.", browser, env);
+                return driver;
+            }
+            case "firefox" -> {
+                FirefoxOptions options = new FirefoxOptions();
+                options.addArguments("--window-size=1920,1080");
+                if (Objects.equals(headless, "true")) {
+                    options.addArguments("-headless");
+                }
+                if (Objects.equals(env, "ci")){
+                    options.addArguments("--no-sandbox");
+                    driver = new RemoteWebDriver(new URL(getUrl()),options);
+                    log.info("Setup {} driver, in {} environment.", browser, env);
+                    return driver;
+                }
+                driver = new FirefoxDriver(options);
+                driver.get(getUrl());
+                log.info("Setup {} driver, in {} environment.", browser, env);
                 return driver;
             }
             default -> {
-                log.warn("Browser ({}) is null", browser);
+                log.warn("Browser ({}) or environment({}) is null", browser, env);
                 return null;
             }
         }
     }
 
     public static String getUrl() {
-        switch (getProperty("env")) {
+        switch (env) {
             case "local" -> {
                 return urls.LOCAL.url;
+            }
+            case "ci" ->{
+                return urls.CI.url;
             }
             default -> {
                 log.warn("Environment doesn't find.");
@@ -121,7 +128,8 @@ public class WebDriverManager {
     }
 
     private enum urls {
-        LOCAL("https://demoqa.com");
+        LOCAL("https://demoqa.com"),
+        CI("http://selenium-router:4444/wd/hub");
 
         final String url;
 
@@ -129,6 +137,8 @@ public class WebDriverManager {
             this.url = url;
         }
     }
+
+//    --- WEBDRIVER WAIT METHODS ---
 
     public static void waitForElementVisibility(WebElement element) {
         WebDriverWait wait = new WebDriverWait(getCurrentDriver(), Duration.ofSeconds(Long.parseLong(waitingTime)));
