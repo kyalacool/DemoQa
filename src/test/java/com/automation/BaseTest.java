@@ -1,5 +1,6 @@
 package com.automation;
 
+import com.automation.utils.WebDriverManager;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
@@ -18,7 +19,7 @@ public class BaseTest {
     @BeforeMethod
     void setup() throws MalformedURLException {
         driver = setDriver();
-        driver.get(getUrl());
+        driver.get(page_url);
     }
 
     @AfterMethod

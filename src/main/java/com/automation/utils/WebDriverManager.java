@@ -31,6 +31,8 @@ public class WebDriverManager {
     private static String waitingTime;
     private static String env;
     private static final ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
+    public final static String page_url = "https://demoqa.com";
+    private final static String remote_url = "http://selenium-router:4444/wd/hub";
 
     public static WebDriver setDriver() throws MalformedURLException {
         threadLocalDriver.set(getDriver());
@@ -62,12 +64,13 @@ public class WebDriverManager {
                 }
                 if (Objects.equals(env, "ci")){
                     options.addArguments("--no-sandbox");
-                    driver = new RemoteWebDriver(new URL(getUrl()),options);
+                    driver = new RemoteWebDriver(new URL(remote_url),options);
+                    driver.get(page_url);
                     log.info("Setup {} driver, in {} environment.", browser, env);
                     return driver;
                 }
                 driver = new ChromeDriver(options);
-                driver.get(getUrl());
+                driver.get(page_url);
                 log.info("Setup {} driver, in {} environment.", browser, env);
                 return driver;
             }
@@ -79,12 +82,13 @@ public class WebDriverManager {
                 }
                 if (Objects.equals(env, "ci")){
                     options.addArguments("--no-sandbox");
-                    driver = new RemoteWebDriver(new URL(getUrl()),options);
+                    driver = new RemoteWebDriver(new URL(remote_url),options);
+                    driver.get(page_url);
                     log.info("Setup {} driver, in {} environment.", browser, env);
                     return driver;
                 }
                 driver = new EdgeDriver(options);
-                driver.get(getUrl());
+                driver.get(page_url);
                 log.info("Setup {} driver, in {} environment.", browser, env);
                 return driver;
             }
@@ -97,12 +101,13 @@ public class WebDriverManager {
                 }
                 if (Objects.equals(env, "ci")){
                     options.addArguments("--no-sandbox");
-                    driver = new RemoteWebDriver(new URL(getUrl()),options);
+                    driver = new RemoteWebDriver(new URL(remote_url),options);
+                    driver.get(page_url);
                     log.info("Setup {} driver, in {} environment.", browser, env);
                     return driver;
                 }
                 driver = new FirefoxDriver(options);
-                driver.get(getUrl());
+                driver.get(page_url);
                 log.info("Setup {} driver, in {} environment.", browser, env);
                 return driver;
             }
@@ -110,32 +115,6 @@ public class WebDriverManager {
                 log.warn("Browser ({}) or environment({}) is null", browser, env);
                 return null;
             }
-        }
-    }
-
-    public static String getUrl() {
-        switch (env) {
-            case "local" -> {
-                return urls.LOCAL.url;
-            }
-            case "ci" ->{
-                return urls.CI.url;
-            }
-            default -> {
-                log.warn("Environment doesn't find.");
-                return "";
-            }
-        }
-    }
-
-    private enum urls {
-        LOCAL("https://demoqa.com"),
-        CI("http://selenium-router:4444/wd/hub");
-
-        final String url;
-
-        urls(String url) {
-            this.url = url;
         }
     }
 

@@ -1,5 +1,6 @@
 package com.automation.pages.elements;
 
+import com.automation.utils.WebDriverManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -66,7 +67,7 @@ public class LinksPage extends BasePage {
         driver.switchTo().window(tabs.get(1));
         HomePage homePage = new HomePage(driver);
         waitForElementVisibility(homePage.getCategoriesWebElement());
-        Assert.assertEquals(driver.getCurrentUrl(), getUrl() + "/");
+        Assert.assertEquals(driver.getCurrentUrl(), page_url + "/");
         driver.close();
         driver.switchTo().window(originalTab);
         Assert.assertTrue(title.isDisplayed());
@@ -82,7 +83,7 @@ public class LinksPage extends BasePage {
         driver.switchTo().window(tabs.get(1));
         HomePage homePage = new HomePage(driver);
         waitForElementVisibility(homePage.getCategoriesWebElement());
-        Assert.assertEquals(driver.getCurrentUrl(), getUrl() + "/");
+        Assert.assertEquals(driver.getCurrentUrl(), page_url + "/");
         driver.close();
         driver.switchTo().window(originalTab);
         Assert.assertTrue(title.isDisplayed());
