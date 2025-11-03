@@ -90,7 +90,8 @@ public class WebDriverManager {
             }
             case "firefox" -> {
                 FirefoxOptions options = new FirefoxOptions();
-                options.addArguments("--window-size=1920,1080");
+                options.addArguments("--width=1920");
+                options.addArguments("--height=1080");
                 if (Objects.equals(headless, "true")) {
                     options.addArguments("-headless");
                 }

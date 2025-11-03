@@ -11,6 +11,9 @@ import org.testng.Assert;
 import com.automation.pages.BasePage;
 import com.automation.utils.WebDriverManager;
 
+import static com.automation.utils.WebDriverManager.scrollTo;
+import static com.automation.utils.WebDriverManager.waitForElementVisibility;
+
 @Slf4j
 public class ButtonsPage extends BasePage {
 
@@ -41,32 +44,33 @@ public class ButtonsPage extends BasePage {
     }
 
     public ButtonsPage clickOnDoubleClickButton() {
-        WebDriverManager.waitForElementVisibility(doubleClickButton);
+        waitForElementVisibility(doubleClickButton);
         Actions actions = new Actions(driver);
         actions.doubleClick(doubleClickButton).perform();
         log.info("Double click button clicked.");
-        WebDriverManager.waitForElementVisibility(doubleClickMessage);
+        waitForElementVisibility(doubleClickMessage);
         Assert.assertTrue(doubleClickMessage.isDisplayed());
         return this;
     }
 
     public ButtonsPage clickOnRightClickButton() {
-        WebDriverManager.waitForElementVisibility(rightClickButton);
+        waitForElementVisibility(rightClickButton);
         Actions actions = new Actions(driver);
+        scrollTo(rightClickButton);
         actions.contextClick(rightClickButton).perform();
         log.info("Right click button clicked.");
-        WebDriverManager.waitForElementVisibility(rightClickMessage);
+        waitForElementVisibility(rightClickMessage);
         actions.sendKeys(Keys.ESCAPE).perform();
         Assert.assertTrue(rightClickMessage.isDisplayed());
         return this;
     }
 
     public void clickOnClickMeButton() {
-        WebDriverManager.waitForElementVisibility(clickMeButton);
+        waitForElementVisibility(clickMeButton);
         Actions actions = new Actions(driver);
         actions.click(clickMeButton).perform();
         log.info("Dynamic button clicked.");
-        WebDriverManager.waitForElementVisibility(dynamicClickMessage);
+        waitForElementVisibility(dynamicClickMessage);
         Assert.assertTrue(dynamicClickMessage.isDisplayed());
     }
 }
