@@ -6,17 +6,19 @@ import org.testng.ITestResult;
 
 @Slf4j
 public class RetryAnalyzer implements IRetryAnalyzer {
-
-    private int retryCount = 0;
+    private ThreadLocal<Integer> retryCount = ThreadLocal.withInitial(() -> 0);
     private static final int MAX_RETRY_COUNT = 3;
 
+    @Override
     public boolean retry(ITestResult result) {
-        if (retryCount < MAX_RETRY_COUNT) {
-            retryCount++;
-            log.warn("RetryAnalyzer should run again. Attempts : {}", retryCount);
+        int currentRetryCount = retryCount.get();
+        if (currentRetryCount < MAX_RETRY_COUNT) {
+            currentRetryCount++;
+            retryCount.set(currentRetryCount);
+            log.warn("RetryAnalyzer runs for: {}. Attempt(s): {}", result.getName(), currentRetryCount);
             return true;
         }
+        retryCount.remove();
         return false;
     }
-
 }
