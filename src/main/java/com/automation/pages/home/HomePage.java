@@ -1,12 +1,13 @@
-package com.automation.pages;
+package com.automation.pages.home;
 
+import com.automation.pages.elements.ElementsPage;
+import com.automation.pages.forms.FormsPage;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import com.automation.pages.elements.ElementsPage;
 
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class HomePage extends BasePage {
     public FormsPage clickOnFormsMenuButton() {
         formsMenuButton.click();
         FormsPage formsPage = new FormsPage(driver);
-        waitForElementVisibility(formsPage.getPracticeFormMenuButton());
+        waitForElementVisibility(formsPage.getPracticeFormButton());
         log.info("User is on the FORMS page");
         return formsPage;
     }

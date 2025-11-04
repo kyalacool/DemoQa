@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
-import com.automation.pages.BasePage;
+import com.automation.pages.home.BasePage;
 import com.automation.utils.WebDriverManager;
 
 @Slf4j

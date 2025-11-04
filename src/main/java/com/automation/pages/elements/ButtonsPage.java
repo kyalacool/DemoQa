@@ -8,8 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
-import com.automation.pages.BasePage;
-import com.automation.utils.WebDriverManager;
+import com.automation.pages.home.BasePage;
 
 import static com.automation.utils.WebDriverManager.scrollTo;
 import static com.automation.utils.WebDriverManager.waitForElementVisibility;

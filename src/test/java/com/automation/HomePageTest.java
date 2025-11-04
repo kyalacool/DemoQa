@@ -1,6 +1,6 @@
 package com.automation;
 
-import com.automation.pages.HomePage;
+import com.automation.pages.home.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

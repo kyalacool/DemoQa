@@ -1,6 +1,5 @@
 package com.automation.pages.elements;
 
-import com.automation.utils.WebDriverManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -9,8 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
-import com.automation.pages.BasePage;
-import com.automation.pages.HomePage;
+import com.automation.pages.home.BasePage;
+import com.automation.pages.home.HomePage;
 
 import java.util.ArrayList;
 import java.util.List;

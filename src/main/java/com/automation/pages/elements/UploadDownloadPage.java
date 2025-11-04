@@ -4,13 +4,9 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.LocalFileDetector;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.UselessFileDetector;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
-import com.automation.pages.BasePage;
-import com.automation.utils.WebDriverManager;
+import com.automation.pages.home.BasePage;
 
 import java.io.File;
 import java.io.IOException;
