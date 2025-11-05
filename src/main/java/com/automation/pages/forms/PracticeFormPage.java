@@ -4,10 +4,12 @@ import com.automation.pages.home.BasePage;
 import com.automation.utils.WebDriverManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class PracticeFormPage extends BasePage {
@@ -18,8 +20,9 @@ public class PracticeFormPage extends BasePage {
     private String MOBILE = "6365613165";
     private String SUBJECT = "a";
     private String CURRENT_ADDRESS = "Bp. 1178 Szalóka utca 14.";
-    private String FILE_PATH = "\"C:\\Users\\bence.varga\\Downloads\\sampleFile.jpeg\"";
-
+    private String FILE_PATH = "C:\\Users\\bence.varga\\Downloads\\sampleFile.jpeg";
+    private List<String> exceptedResultList = List.of(FIRSTNAME + " " + LASTNAME, EMAIL, "Male", MOBILE,
+            "22 November,1991", "Arts", "Reading, Music", "sampleFile.jpeg", CURRENT_ADDRESS, "NCR Gurgaon");
 
     @Getter
     @FindBy(xpath = "//input[@id='firstName']")
@@ -49,19 +52,19 @@ public class PracticeFormPage extends BasePage {
     @FindBy(xpath = "//div[@class='react-datepicker__week']/div[contains(text(),'22')]")
     private WebElement dayChoose;
 
-    @FindBy(xpath = "//div[@id='subjectsContainer']/div")
+    @FindBy(xpath = "//div[@id='subjectsContainer']")
     private WebElement subjectsAutoCompleteInput;
 
-    @FindBy(xpath = "//div[@class='subjects-auto-complete__menu']")
-    private WebElement subjectsOpenedMenu;
+    @FindBy(xpath = "//input[@id='subjectsInput']")
+    private WebElement subjectsAutoCompleteOpened;
 
-    @FindBy(xpath = "//input[@value='1']")
+    @FindBy(xpath = "//label[@for='hobbies-checkbox-1']")
     private WebElement sportsButton;
 
-    @FindBy(xpath = "//input[@value='2']")
+    @FindBy(xpath = "//label[@for='hobbies-checkbox-2']")
     private WebElement readingButton;
 
-    @FindBy(xpath = "//input[@value='3']")
+    @FindBy(xpath = "//label[@for='hobbies-checkbox-3']")
     private WebElement musicButton;
 
     @FindBy(xpath = "//input[@id='uploadPicture']")
@@ -70,11 +73,17 @@ public class PracticeFormPage extends BasePage {
     @FindBy(xpath = "//textarea[@id='currentAddress']")
     private WebElement currentAddressInput;
 
-    @FindBy(xpath = "//div[contains(text(), 'Select State')]")
+    @FindBy(xpath = "//div[@id='state']")
     private WebElement selectStateButton;
 
-    @FindBy(xpath = "//div[contains(text(), 'Select City')]")
+    @FindBy(xpath = "//div[@id='react-select-3-option-0']")
+    private WebElement selectStateOption;
+
+    @FindBy(xpath = "//div[@id='city']")
     private WebElement selectCityButton;
+
+    @FindBy(xpath = "//div[@id='react-select-4-option-1']")
+    private WebElement selectCityOption;
 
     @FindBy(xpath = "//button[@id='submit']")
     private WebElement submitButton;
@@ -83,7 +92,17 @@ public class PracticeFormPage extends BasePage {
         super(driver);
     }
 
-    public void verifyPracticeFormWithValidData() throws InterruptedException {
+    public List<String> getTheResultOfTable(){
+        List<String> actualResultList = new ArrayList<>();
+        List<WebElement> tableResult = driver.findElements(By.xpath("//table/tbody//tr/td[2]"));
+        for (WebElement element : tableResult){
+            String cellValue = element.getAttribute("innerHTML");
+            actualResultList.add(cellValue);
+        }
+        return actualResultList;
+    }
+
+    public void verifyPracticeFormWithValidData(){
         firstNameInput.sendKeys(FIRSTNAME);
         lastNameInput.sendKeys(LASTNAME);
         userEmailInput.sendKeys(EMAIL);
@@ -94,23 +113,23 @@ public class PracticeFormPage extends BasePage {
         yearChoose.click();
         dayChoose.click();
         subjectsAutoCompleteInput.click();
-        log.warn("test failed here");
-        Thread.sleep(5000);
-        subjectsAutoCompleteInput.sendKeys(SUBJECT);
-        WebDriverManager.waitForElementVisibility(subjectsOpenedMenu);
-        subjectsAutoCompleteInput.sendKeys(Keys.ARROW_DOWN);
-        subjectsAutoCompleteInput.sendKeys(Keys.ARROW_DOWN);
-        subjectsAutoCompleteInput.sendKeys(Keys.ENTER);
-        log.info("test after subject 2");
+        subjectsAutoCompleteOpened.sendKeys(SUBJECT);
+        subjectsAutoCompleteOpened.sendKeys(Keys.ARROW_DOWN);
+        subjectsAutoCompleteOpened.sendKeys(Keys.ARROW_DOWN);
+        subjectsAutoCompleteOpened.sendKeys(Keys.ENTER);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true)", readingButton);
         readingButton.click();
         musicButton.click();
         chooseFileButton.sendKeys(FILE_PATH);
         currentAddressInput.sendKeys(CURRENT_ADDRESS);
-        selectStateButton.sendKeys(Keys.ARROW_DOWN);
-        selectStateButton.sendKeys(Keys.ARROW_DOWN);
-        selectStateButton.sendKeys(Keys.ENTER);
-        selectCityButton.sendKeys(Keys.ARROW_DOWN);
-        selectCityButton.sendKeys(Keys.ENTER);
+        selectStateButton.click();
+        selectStateOption.click();
+        selectCityButton.click();
+        selectCityOption.click();
         submitButton.click();
+        WebDriverManager.waitForElementVisibility(driver.findElement(By.xpath("//body[@class='modal-open']")));
+        getTheResultOfTable();
+        Assert.assertEquals(getTheResultOfTable(),exceptedResultList);
     }
 }

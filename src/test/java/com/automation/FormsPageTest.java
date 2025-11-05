@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class FormsPageTest extends BaseTest{
 
     @Test
-    public void verifyPracticeForm() throws InterruptedException {
+    public void verifyPracticeFormWithValidData() {
         HomePage homePage = new HomePage(getDriver());
         homePage.clickOnFormsMenuButton()
                 .clickOnPracticeFormButton()
