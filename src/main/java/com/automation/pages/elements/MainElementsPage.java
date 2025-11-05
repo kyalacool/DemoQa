@@ -9,7 +9,7 @@ import com.automation.pages.home.BasePage;
 import com.automation.utils.WebDriverManager;
 
 @Slf4j
-public class ElementsPage extends BasePage {
+public class MainElementsPage extends BasePage {
 
     @FindBy(xpath = "//span[@class='text'][contains(text(), 'Text Box')]")
     private WebElement textBoxMenuButton;
@@ -39,7 +39,7 @@ public class ElementsPage extends BasePage {
     @FindBy(xpath = "//span[@class='text'][contains(text(), 'Dynamic Properties')]")
     private WebElement dynamicPropertiesMenuButton;
 
-    public ElementsPage(WebDriver driver) {
+    public MainElementsPage(WebDriver driver) {
         super(driver);
     }
 

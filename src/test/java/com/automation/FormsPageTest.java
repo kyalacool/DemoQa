@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 public class FormsPageTest extends BaseTest{
 
-    @Test
+    @Test(groups = "download")
     public void verifyPracticeFormWithValidData() {
         HomePage homePage = new HomePage(getDriver());
         homePage.clickOnFormsMenuButton()

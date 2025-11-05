@@ -7,13 +7,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class FormsPage extends BasePage {
+public class MainFormsPage extends BasePage {
 
     @Getter
     @FindBy(xpath = "//span[@class='text'][contains(text(), 'Practice')]")
     private WebElement practiceFormButton;
 
-    public FormsPage(WebDriver driver) {
+    public MainFormsPage(WebDriver driver) {
         super(driver);
     }
 

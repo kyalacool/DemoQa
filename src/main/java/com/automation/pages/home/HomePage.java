@@ -1,7 +1,8 @@
 package com.automation.pages.home;
 
-import com.automation.pages.elements.ElementsPage;
-import com.automation.pages.forms.FormsPage;
+import com.automation.pages.alerts.MainAlertsPage;
+import com.automation.pages.elements.MainElementsPage;
+import com.automation.pages.forms.MainFormsPage;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
@@ -54,24 +55,24 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    public ElementsPage clickOnElementsMenuButton() {
+    public MainElementsPage clickOnElementsMenuButton() {
         elementsMenuButton.click();
-        ElementsPage elementsPage = new ElementsPage(driver);
+        MainElementsPage elementsPage = new MainElementsPage(driver);
         waitForElementVisibility(elementsPage.getWebTablesMenuButton());
         return elementsPage;
     }
 
-    public FormsPage clickOnFormsMenuButton() {
+    public MainFormsPage clickOnFormsMenuButton() {
         formsMenuButton.click();
-        FormsPage formsPage = new FormsPage(driver);
+        MainFormsPage formsPage = new MainFormsPage(driver);
         waitForElementVisibility(formsPage.getPracticeFormButton());
         log.info("User is on the FORMS page");
         return formsPage;
     }
 
-    public AlertsPage clickOnAlertsMenuButton() {
+    public MainAlertsPage clickOnAlertsMenuButton() {
         alertsFrameWindowsMenuButton.click();
-        AlertsPage alertsPage = new AlertsPage(driver);
+        MainAlertsPage alertsPage = new MainAlertsPage(driver);
         waitForElementVisibility(alertsPage.getAlertsMenuButton());
         log.info("User is on the ALERTS, FRAME & WINDOWS page");
         return alertsPage;
