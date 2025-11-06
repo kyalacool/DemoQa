@@ -57,6 +57,9 @@ public class WebDriverManager {
             case "chrome" -> {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--window-size=1920,1080");
+                options.addArguments("--disable-gpu");
+                options.addArguments("--disable-dev-shm-usage");
+                options.addArguments("--no-sandbox");
                 if (Objects.equals(headless, "true")) {
                     options.addArguments("--headless");
                 }
@@ -68,6 +71,9 @@ public class WebDriverManager {
             case "edge" -> {
                 EdgeOptions options = new EdgeOptions();
                 options.addArguments("--window-size=1920,1080");
+                options.addArguments("--disable-gpu");
+                options.addArguments("--disable-dev-shm-usage");
+                options.addArguments("--no-sandbox");
                 if (Objects.equals(headless, "true")) {
                     options.addArguments("headless");
                 }

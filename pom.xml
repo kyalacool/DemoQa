@@ -20,7 +20,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <rest-assured.version>5.5.6</rest-assured.version>
-        <selenium-java.version>4.36.0</selenium-java.version>
+        <selenium-java.version>4.38.0</selenium-java.version>
         <slf4j-api.version>2.0.17</slf4j-api.version>
         <slf4j-simple.version>2.0.17</slf4j-simple.version>
         <testng.version>7.11.0</testng.version>

@@ -6,10 +6,19 @@ import org.testng.annotations.Test;
 public class AlertsPageTest extends BaseTest{
 
     @Test
-    public void verifyBrowserWindow(){
+    public void verifyFirstTwoButtonOnBrowserWindows(){
         HomePage homePage = new HomePage(getDriver());
         homePage.clickOnAlertsMenuButton()
                 .clickOnBrowserWindowsSubMenu()
-                .verifyButtons();
+                .verifyNewTabButton()
+                .verifyNewWindowButton();
+    }
+
+    @Test(groups = "onlyFirefox")
+    public void verifyLastButtonOnBrowserWindows(){
+        HomePage homePage = new HomePage(getDriver());
+        homePage.clickOnAlertsMenuButton()
+                .clickOnBrowserWindowsSubMenu()
+                .verifyNewWindowsMessageButton();
     }
 }
