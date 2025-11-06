@@ -9,11 +9,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.util.Set;
 
-import static com.automation.utils.WebDriverManager.getCurrentDriver;
-import static com.automation.utils.WebDriverManager.waitForElementPresence;
+import static com.automation.utils.WebDriverManager.*;
 
 @Slf4j
 public class BrowserWindowsPage extends BasePage {
@@ -34,47 +34,50 @@ public class BrowserWindowsPage extends BasePage {
         super(driver);
     }
 
-    public BrowserWindowsPage verifyNewTabButton() {
+    public void verifyNewTabAndNewWindowButton() {
+        SoftAssert softAssert = new SoftAssert();
         String originalWindow = driver.getWindowHandle();
         newTabButton.click();
+        log.info("/New Tab/ button clicked.");
         Set<String> allWindows = driver.getWindowHandles();
         for (String window : allWindows) {
             if (!window.equals(originalWindow)) {
                 driver.switchTo().window(window);
                 waitForElementPresence(By.id("sampleHeading"));
-                Assert.assertEquals(driver.getCurrentUrl(), "https://demoqa.com/sample");
+                log.info("A new tab opened.");
+                softAssert.assertEquals(driver.getCurrentUrl(), "https://demoqa.com/sample");
                 driver.close();
                 break;
             }
         }
         driver.switchTo().window(originalWindow);
-        return this;
-    }
-
-    public BrowserWindowsPage verifyNewWindowButton() {
-        String originalWindow = driver.getWindowHandle();
+        waitForElementVisibility(newWindowButton);
         newWindowButton.click();
-        Set<String> allWindows = driver.getWindowHandles();
+        log.info("/New Window/ button is clicked.");
+        allWindows = driver.getWindowHandles();
         for (String window : allWindows) {
             if (!window.equals(originalWindow)) {
                 driver.switchTo().window(window);
                 waitForElementPresence(By.id("sampleHeading"));
-                Assert.assertEquals(driver.getCurrentUrl(), "https://demoqa.com/sample");
+                log.info("A new window opened.");
+                softAssert.assertEquals(driver.getCurrentUrl(), "https://demoqa.com/sample");
                 driver.close();
                 break;
             }
         }
         driver.switchTo().window(originalWindow);
-        return this;
+        softAssert.assertAll();
     }
 
     public BrowserWindowsPage verifyNewWindowsMessageButton() {
         String originalWindow = driver.getWindowHandle();
         newWindowMessageButton.click();
+        log.info("/New Window Message/ button is clicked.");
         Set<String> allWindows = driver.getWindowHandles();
         for (String window : allWindows) {
             if (!window.equals(originalWindow)) {
                 driver.switchTo().window(window);
+                log.info("A new window (with message) opened.");
                 WebElement element = driver.findElement(By.tagName("body"));
                 Assert.assertTrue(element.getText().startsWith("Knowledge"),
                         "The body of the new window does not start with 'Knowledge'");

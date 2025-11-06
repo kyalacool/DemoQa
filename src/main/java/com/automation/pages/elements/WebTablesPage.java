@@ -1,6 +1,7 @@
 package com.automation.pages.elements;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -16,6 +17,7 @@ import java.util.*;
 
 import static com.automation.utils.WebDriverManager.waitForElementVisibility;
 
+@Slf4j
 public class WebTablesPage extends BasePage {
 
     private final String COLUMN_FIRST_NAME = "First Name";
@@ -126,6 +128,7 @@ public class WebTablesPage extends BasePage {
     private void clickOnEditByEmail(String email) {
         WebElement deletedElement = driver.findElement(By
                 .xpath("//span[@title='Edit' and ./../../preceding-sibling::div[contains(text(),'%s')]]".formatted(email)));
+        log.info("Edit button clicked next to : {}", email);
         deletedElement.click();
     }
 
@@ -133,6 +136,7 @@ public class WebTablesPage extends BasePage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         SoftAssert softAssert = new SoftAssert();
         addButton.click();
+        log.info("/Add/ button clicked.");
         waitForElementVisibility(addTable);
         String ageBoarderColorBefore = ageInput.getCssValue("border-color");
         String salaryBoarderColorBefore = salaryInput.getCssValue("border-color");
@@ -144,6 +148,8 @@ public class WebTablesPage extends BasePage {
         salaryInput.sendKeys(INVALID_SALARY);
         departmentInput.sendKeys(VALID_DEPARTMENT);
         submitButton.click();
+        log.info("Submitted with these (incorrect) data : \n{}\n{}\n{}\n{}\n{}\n{}",
+                VALID_FIRST_NAME,VALID_LAST_NAME,INVALID_EMAIL,INVALID_AGE,INVALID_SALARY,VALID_DEPARTMENT);
         wait.until(d -> "rgb(220, 53, 69)".equals(ageInput.getCssValue("border-color")));
         String ageBoarderColorAfter = ageInput.getCssValue("border-color");
         String salaryBoarderColorAfter = salaryInput.getCssValue("border-color");
@@ -160,6 +166,7 @@ public class WebTablesPage extends BasePage {
     public WebTablesPage verifyAddFunctionalityWithValidData() {
         SoftAssert softAssert = new SoftAssert();
         addButton.click();
+        log.info("/Add/ button clicked.");
         waitForElementVisibility(addTable);
         firstNameInput.sendKeys(VALID_FIRST_NAME);
         lastNameInput.sendKeys(VALID_LAST_NAME);
@@ -168,6 +175,8 @@ public class WebTablesPage extends BasePage {
         salaryInput.sendKeys(VALID_SALARY);
         departmentInput.sendKeys(VALID_DEPARTMENT);
         submitButton.click();
+        log.info("Submitted with these (correct) data : \n{}\n{}\n{}\n{}\n{}\n{}",
+                VALID_FIRST_NAME,VALID_LAST_NAME,VALID_EMAIL,VALID_AGE,VALID_SALARY,VALID_DEPARTMENT);
         softAssert.assertTrue(isDataInTheTable(COLUMN_FIRST_NAME, VALID_FIRST_NAME));
         softAssert.assertTrue(isDataInTheTable(COLUMN_LAST_NAME, VALID_LAST_NAME));
         softAssert.assertTrue(isDataInTheTable(COLUMN_AGE, VALID_AGE));
@@ -182,14 +191,18 @@ public class WebTablesPage extends BasePage {
         clickOnEditByEmail(VALID_EMAIL);
         firstNameInput.clear();
         firstNameInput.sendKeys(NEW_FIRST_NAME);
+        log.info("New First Name added : {}", NEW_FIRST_NAME);
         submitButton.click();
+        log.info("Submit button clicked.");
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(isDataInTheTable(COLUMN_FIRST_NAME, NEW_FIRST_NAME));
         softAssert.assertFalse(isDataInTheTable(COLUMN_FIRST_NAME, VALID_FIRST_NAME));
         clickOnEditByEmail(VALID_EMAIL);
         firstNameInput.clear();
         firstNameInput.sendKeys(VALID_FIRST_NAME);
+        log.info("New First Name added : {}", VALID_FIRST_NAME);
         submitButton.click();
+        log.info("Submit button clicked.");
         softAssert.assertFalse(isDataInTheTable(COLUMN_FIRST_NAME, NEW_FIRST_NAME));
         softAssert.assertTrue(isDataInTheTable(COLUMN_FIRST_NAME, VALID_FIRST_NAME));
         softAssert.assertAll();
@@ -198,10 +211,13 @@ public class WebTablesPage extends BasePage {
 
     public WebTablesPage verifySearchFunctionality() {
         searchInput.sendKeys(VALID_FIRST_NAME);
+        log.info("Search to : {}", VALID_FIRST_NAME);
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(isDataInTheTable(COLUMN_FIRST_NAME, VALID_FIRST_NAME));
         searchInput.clear();
         searchInput.sendKeys(NEW_FIRST_NAME);
+        log.info("Search to : {}", NEW_FIRST_NAME);
+//TODO : YOU WERE HERE!
         softAssert.assertFalse(isDataInTheTable(COLUMN_FIRST_NAME, VALID_FIRST_NAME));
         softAssert.assertAll();
         searchInput.sendKeys(Keys.CONTROL + "a");

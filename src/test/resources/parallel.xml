@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="DemoQA.com parallel tests" parallel="classes" thread-count="3">
+    <listeners>
+        <listener class-name="com.automation.utils.RetryListener"/>
+    </listeners>
+    <test name="DemoQA tests">
+        <packages>
+            <package name="com.automation"></package>
+        </packages>
+    </test>
+</suite>

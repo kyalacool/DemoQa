@@ -32,6 +32,7 @@ public class BaseTest {
     @AfterClass
     void tearDown() {
         getCurrentDriver().quit();
+        log.info("Driver quit.");
         removeThreadLocalDriver();
     }
 }

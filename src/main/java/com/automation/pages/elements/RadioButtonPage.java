@@ -41,7 +41,6 @@ public class RadioButtonPage extends BasePage {
     }
 
     public void verifyRadioButtonsFunctionality() {
-        log.info("Checking the radio buttons functionality.");
         SoftAssert soft = new SoftAssert();
         soft.assertTrue(isResultIsNull());
         noRadioButton.click();
@@ -51,5 +50,6 @@ public class RadioButtonPage extends BasePage {
         impressiveRadioButton.click();
         soft.assertTrue(isChoosen("Impressive"));
         soft.assertAll();
+        log.info("The radio buttons functionality verified.");
     }
 }

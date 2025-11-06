@@ -11,6 +11,8 @@ import org.testng.asserts.SoftAssert;
 import com.automation.pages.home.BasePage;
 import com.automation.utils.WebDriverManager;
 
+import static com.automation.utils.WebDriverManager.waitForElementVisibility;
+
 @Slf4j
 public class TextBoxPage extends BasePage {
 
@@ -63,9 +65,9 @@ public class TextBoxPage extends BasePage {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true)", submitButton);
         submitButton.click();
-        log.info(" Textbox submitted with the following correct data : \n Full name : {}\n Email : {}\n Current address : {}\n Permanent address : {}",
+        log.info(" Textbox submitted with the following (correct) data : \n Full name : {}\n Email : {}\n Current address : {}\n Permanent address : {}",
                 CORRECT_NAME, CORRECT_EMAIL, CORRECT_CURRENT_ADDRESS, CORRECT_PERMANENT_ADDRESS);
-        WebDriverManager.waitForElementVisibility(nameResultElement);
+        waitForElementVisibility(nameResultElement);
         SoftAssert soft = new SoftAssert();
         String nameResult = (String)
                 js.executeScript("return arguments[0].childNodes[1].textContent", nameResultElement);
@@ -87,11 +89,11 @@ public class TextBoxPage extends BasePage {
         emailInput.sendKeys(INCORRECT_EMAIL);
         currentAddressInput.sendKeys(CORRECT_CURRENT_ADDRESS);
         permanentAddressInput.sendKeys(CORRECT_PERMANENT_ADDRESS);
-        WebDriverManager.waitForElementVisibility(submitButton);
+        waitForElementVisibility(submitButton);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true)", submitButton);
         submitButton.click();
-        log.info(" Textbox submitted with the following incorrect data : \n Full name : {}\n Email : {}\n Current address : {}\n Permanent address : {}",
+        log.info(" Textbox submitted with the following (incorrect) data : \n Full name : {}\n Email : {}\n Current address : {}\n Permanent address : {}",
                 CORRECT_NAME, INCORRECT_EMAIL, CORRECT_CURRENT_ADDRESS, CORRECT_PERMANENT_ADDRESS);
         Assert.assertTrue(invalidEmailInput.isDisplayed());
     }

@@ -64,7 +64,6 @@ public class CheckBoxPage extends BasePage {
     }
 
     public void verifyCheckBoxAndToggleFunctionality() {
-        log.info("Checking the radio buttons functionality.");
         SoftAssert soft = new SoftAssert();
         soft.assertTrue(isCheckBoxUnchecked("Home"));
         getClickableCheckBox("Home").click();
@@ -81,5 +80,6 @@ public class CheckBoxPage extends BasePage {
         soft.assertTrue(isCheckBoxUnchecked("Documents"));
         soft.assertTrue(isCheckBoxUnchecked("Downloads"));
         soft.assertAll();
+        log.info("The checkbox and toogle button functionality are verified.");
     }
 }

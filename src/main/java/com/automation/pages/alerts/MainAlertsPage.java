@@ -3,12 +3,14 @@ package com.automation.pages.alerts;
 import com.automation.pages.home.BasePage;
 import com.automation.utils.WebDriverManager;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import static com.automation.utils.WebDriverManager.waitForElementVisibility;
 
+@Slf4j
 public class MainAlertsPage extends BasePage {
 
     @Getter
@@ -35,6 +37,7 @@ public class MainAlertsPage extends BasePage {
         browserWindowsMenuButton.click();
         BrowserWindowsPage browserWindowsPage = new BrowserWindowsPage(driver);
         waitForElementVisibility(browserWindowsPage.getNewTabButton());
+        log.info("User is on the Browser Windows page.");
         return browserWindowsPage;
     }
 

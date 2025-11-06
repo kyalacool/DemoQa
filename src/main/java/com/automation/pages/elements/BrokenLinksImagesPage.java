@@ -3,6 +3,7 @@ package com.automation.pages.elements;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,6 +12,7 @@ import org.testng.asserts.SoftAssert;
 import com.automation.pages.home.BasePage;
 import com.automation.utils.WebDriverManager;
 
+@Slf4j
 public class BrokenLinksImagesPage extends BasePage {
 
     @Getter
@@ -46,6 +48,7 @@ public class BrokenLinksImagesPage extends BasePage {
                         " 'undefined' && arguments[0].naturalWidth > 0", brokenImage);
         softAssert.assertFalse(invalidResult);
         softAssert.assertAll();
+        log.info("Images verified.");
         return this;
     }
 
